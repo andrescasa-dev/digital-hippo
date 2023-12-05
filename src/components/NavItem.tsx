@@ -26,7 +26,7 @@ const NavItem = ({category} : {category: Category}) => {
       params.delete('category')
     }
     
-    router.push(`${pathname}?${params}`)
+    router.replace(`${pathname}?${params}`)
   }
 
   return (

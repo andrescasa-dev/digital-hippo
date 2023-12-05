@@ -1,42 +1,18 @@
 'use client'
 
+import { PRODUCT_CATEGORIES } from "@/config"
 import Link from "next/link"
+import { useRef } from "react"
 import { Icons } from "./Icons"
 import MaxWidthWrapper from "./MaxWidthWrapper"
-import { useEffect, useRef } from "react"
-import { usePathname, useSearchParams, useRouter } from "next/navigation"
-import { useOnClickOutside } from "@/hooks/useOnClickOutside"
-import { PRODUCT_CATEGORIES } from "@/config"
 import NavItem from "./NavItem"
 import { buttonVariants } from "./ui/button"
+import useCloseNavPanel from "@/hooks/useCloseNavPanel"
 
 const Header = () => {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
   const headerRef = useRef<HTMLElement | null>(null)
-
-  const closeNav = () =>{
-    const params = new URLSearchParams(searchParams)
-    if(params.get('category')){
-      params.delete('category')
-      router.replace(`${pathname}?${params}`)
-    }
-  }
-
-  useOnClickOutside(headerRef, () => closeNav())
-
-  useEffect(()=>{
-    const closeHandler = (e: KeyboardEvent) =>{
-      if(e.key === 'Escape'){
-        closeNav()
-      }
-    }
-    document.addEventListener('keydown',closeHandler)
-    return () => {
-      document.removeEventListener('keydown',closeHandler)
-    }
-  },[])
+  
+  useCloseNavPanel(headerRef)
 
   return (
     <header ref={headerRef} className="sticky z-10">
