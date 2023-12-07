@@ -4,6 +4,9 @@
     "src/collections/**/*.ts",
     "src/trpc/index.ts"
   ],
+  "execMap": {
+    "ts": "ts-node"
+  },
   "exec": "ts-node --project tsconfig.server.json src/server.ts -- -I",
   "ext": "js ts",
   "stdin": false
