@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { Credentials, credentialsSchema } from "@/lib/validators/account-credentials-validator"
+import { trpc } from "@/trpc/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
@@ -19,6 +20,10 @@ export default function SignUpPage() {
   const onSubmit = ({email, password}: Credentials) => {
     console.log({email, password})
   }
+
+  const {data} = trpc.anyApiRoute.useQuery()
+
+  console.log(data)
 
   return (
     <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0'>
