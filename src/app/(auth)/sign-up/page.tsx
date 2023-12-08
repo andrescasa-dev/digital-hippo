@@ -17,13 +17,15 @@ export default function SignUpPage() {
     resolver: zodResolver(credentialsSchema)
   })
 
+  const {mutate, error} = trpc.auth.createPayloadUser.useMutation({
+    onError: (err) => {
+      console.error('createPayloadUser error: ', err)
+    }
+  })
+
   const onSubmit = ({email, password}: Credentials) => {
-    console.log({email, password})
+    mutate({email, password})
   }
-
-  const {data} = trpc.anyApiRoute.useQuery()
-
-  console.log(data)
 
   return (
     <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0'>
@@ -39,9 +41,12 @@ export default function SignUpPage() {
             placeholder="some@email.com"
             {...register("email")}
           />
+          {  error?.data?.code === 'CONFLICT' && (
+            <p className="text-sm text-red-500">{error.message}</p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
-          <Label>Email</Label>
+          <Label>Password</Label>
           <Input
             className={cn({
               'focus-visible:ring-red-500': errors.password
