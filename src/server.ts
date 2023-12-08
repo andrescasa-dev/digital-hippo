@@ -17,7 +17,7 @@ const createContext = ({
 })
 
 const start = async () => {
-  // Payload config
+  // Initialization of payload and being cached
   const payload = await getPayloadClient({
     initOptions: {
       express: app,
