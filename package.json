@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
+    "next-dev": "next dev",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
     "build": "next build",
     "start": "next start",
@@ -36,7 +37,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
-    "sooner": "^1.1.4",
+    "sonner": "^1.2.4",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
