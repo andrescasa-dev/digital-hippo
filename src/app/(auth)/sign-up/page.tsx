@@ -10,6 +10,7 @@ import { trpc } from "@/trpc/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
+import { toast } from 'sonner'
 
 
 export default function SignUpPage() {
@@ -19,7 +20,15 @@ export default function SignUpPage() {
 
   const {mutate, error} = trpc.auth.createPayloadUser.useMutation({
     onError: (err) => {
+      if(err.data?.code === 'CONFLICT'){
+        return toast.error('This user is already singed up')
+      }
+      
+      toast.error('something happened, we are working on it, please try again')
       console.error('createPayloadUser error: ', err)
+    },
+    onSuccess: () => {
+      toast.success('verification email sent')
     }
   })
 
@@ -29,7 +38,7 @@ export default function SignUpPage() {
 
   return (
     <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0'>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 grid-cols-[300px]">
         <Icons.logo className="h-20 w-20 justify-self-center" />
         <h1 className="justify-self-center">Create an account</h1>
         <div className="flex flex-col gap-2">
@@ -41,8 +50,8 @@ export default function SignUpPage() {
             placeholder="some@email.com"
             {...register("email")}
           />
-          {  error?.data?.code === 'CONFLICT' && (
-            <p className="text-sm text-red-500">{error.message}</p>
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -55,6 +64,9 @@ export default function SignUpPage() {
             placeholder="password"
             {...register("password")}
           />
+          {  errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
         </div>
         <Button >Sign up</Button>
         <Link

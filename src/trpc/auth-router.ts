@@ -1,8 +1,8 @@
+import { tokenSchema } from "../lib/validators/token-schema";
 import { getPayloadClient } from "../get-payloadClient";
 import { credentialsSchema } from "../lib/validators/account-credentials-validator";
 import { publicProcedure, router } from "./trpc";
 import { TRPCError } from '@trpc/server'
-
 
 export const authRouter = router({
   createPayloadUser: publicProcedure
@@ -30,5 +30,22 @@ export const authRouter = router({
       })
 
       return { success: true, sendToEmail: email}
+    }),
+
+  verifyEmail: publicProcedure
+    .input(tokenSchema)
+    .query(async ({input}) => {
+      const { token } = input
+      const payload = await getPayloadClient()
+      const isVerified = await payload.verifyEmail({
+        collection: 'users',
+        token
+      })
+
+      if(!isVerified){
+        throw new TRPCError({code: 'UNAUTHORIZED'})
+      }
+      
+      return {success: true}
     })
 })
