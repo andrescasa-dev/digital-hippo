@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import Header from '@/components/Header'
 import Providers from '@/components/Providers'
 import { Toaster } from 'sonner'
+import NavBar from '@/components/NavBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, 'antialiased')}>
         <Providers>
-          <Header />
+          <Header> 
+            <NavBar/>
+          </Header>
           <main>
             {children}
           </main>
