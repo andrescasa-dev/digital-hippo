@@ -3,6 +3,7 @@ import express from 'express';
 import { getPayloadClient } from './get-payloadClient';
 import { nextRequestHandler, nextServer } from './next-utils';
 import { appRouter } from './trpc';
+import { inferAsyncReturnType } from '@trpc/server';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000
@@ -15,6 +16,8 @@ const createContext = ({
   req,
   res,
 })
+
+export type ExpressContext = inferAsyncReturnType<typeof createContext>
 
 const start = async () => {
   // Initialization of payload and being cached
