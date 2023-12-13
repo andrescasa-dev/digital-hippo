@@ -71,7 +71,7 @@ export default function SignInPage() {
         <h1 className="justify-self-center">Sign {isSeller ? 'into your seller account' : 'in'} </h1>
         <Link
           className={cn(buttonVariants({variant: 'link'}))}
-          href={'/sing-up'}> 
+          href={'/sign-up'}> 
           Don&apos;t have an account? sing up
         </Link>
         <form className="grid gap-6" >

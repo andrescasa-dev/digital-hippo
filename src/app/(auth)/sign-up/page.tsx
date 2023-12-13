@@ -8,17 +8,22 @@ import { cn } from "@/lib/utils"
 import { Credentials, credentialsSchema } from "@/lib/validators/account-credentials-validator"
 import { trpc } from "@/trpc/client"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from 'sonner'
 
 
 export default function SignUpPage() {
+  const router = useRouter()
+
   const {register, handleSubmit, formState:{errors}} = useForm<Credentials>({
     resolver: zodResolver(credentialsSchema)
   })
 
-  const {mutate, error} = trpc.auth.createPayloadUser.useMutation({
+  const {mutate: signUp, error, isLoading: isLoadingSignUp, data: signUpData} = trpc.auth.createPayloadUser.useMutation({
     onError: (err) => {
       if(err.data?.code === 'CONFLICT'){
         return toast.error('This user is already singed up')
@@ -27,13 +32,14 @@ export default function SignUpPage() {
       toast.error('something happened, we are working on it, please try again')
       console.error('createPayloadUser error: ', err)
     },
-    onSuccess: () => {
+    onSuccess: ({sendToEmail}) => {
       toast.success('verification email sent')
+      router.push(`/verify-email?email=${sendToEmail}`)
     }
   })
 
   const onSubmit = ({email, password}: Credentials) => {
-    mutate({email, password})
+    signUp({email, password})
   }
 
   return (
@@ -68,10 +74,10 @@ export default function SignUpPage() {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <Button >Sign up</Button>
+        <Button disabled={isLoadingSignUp || signUpData?.success} >{isLoadingSignUp || signUpData?.success ? <Loader2 className="h-4 w-4 animate-spin"/> :'Sign up'}</Button>
         <Link
           className={cn(buttonVariants({variant: 'link'}), '-mt-4')}
-          href={'/sing-in'}> 
+          href={'/sign-in'}> 
           Already have and account? Sing-in
         </Link>
       </form>
