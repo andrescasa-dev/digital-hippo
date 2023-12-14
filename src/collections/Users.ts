@@ -21,12 +21,8 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: 'role',
-      required: true,
-      defaultValue: 'user',
       type: 'select',
-      admin: {
-        condition: () => false
-      },
+      defaultValue: 'user',
       options: [
         {
           label: 'User',
@@ -36,7 +32,16 @@ export const Users: CollectionConfig = {
           label: 'Admin',
           value: 'admin'
         }
-      ]
+      ],
+      required: true,
+    },
+    {
+      // To do: access set up
+      name: 'products',
+      label: 'Products',
+      type: 'relationship',
+      relationTo: 'products',
+      hasMany: true
     }
   ]
 }

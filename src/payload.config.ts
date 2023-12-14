@@ -3,17 +3,19 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import dotenv from 'dotenv'
 import path from 'path'
+import { buildConfig } from 'payload/config'
+import { Users } from './collections/Users'
+import { Products } from './collections/Products'
+import { MediaFiles } from './collections/Media'
+import { ProductFiles } from './collections/ProductFiles'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
 })
 
-import { buildConfig } from 'payload/config'
-import { Users } from './collections/Users'
-
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
-  collections: [Users],
+  collections: [Users, Products, MediaFiles, ProductFiles],
   routes: {
     admin:'/sell'
   },
