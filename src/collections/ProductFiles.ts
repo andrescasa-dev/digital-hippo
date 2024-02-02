@@ -1,8 +1,64 @@
-import { CollectionConfig } from "payload/types";
+import { Access, CollectionConfig } from "payload/types";
 import { addUserHook, isAdminOrOwner } from "../lib/payload-utils";
+import { User } from "payload/dist/auth";
+import payload from "payload";
+import { string } from "zod";
 /* Todo
 -[ ] client access
 */
+
+const isBuyerOrSellerOrAdmin: Access = async ({req})=>{
+  const userReq = req.user as User | null
+  if(!userReq) return false
+  if(userReq.role === 'admin') return true
+  
+  // seller files
+  const {docs: products} = await req.payload.find({
+    collection: 'products',
+    depth: 0,
+    where: {
+      user: {
+        equals: userReq.id
+      }
+    }
+  })
+  
+  const ownedProductFileIds = products
+    .map((product) =>{
+      return typeof product.files === 'string' ? product.files : product.files.id
+    })
+    .flat()
+
+  // buyer files
+  const {docs: orders} = await req.payload.find({
+    collection: 'orders',
+    depth: 2,
+    where: {
+      user: {
+        equals: userReq.id
+      }
+    }
+  })
+
+  const purchasedProductFilesIds = orders.map((order)=>{
+    return order.products.map((product)=>{
+      if(typeof product === 'string') 
+        return req.payload.logger.error('insufficient depth to find product files in an order')
+      return typeof product.files === 'string' ? product.files : product.files.id
+    })
+  })
+  .filter(Boolean)
+  .flat()
+
+  return {
+    id:{
+      in: [
+        ...purchasedProductFilesIds,
+        ...ownedProductFileIds
+      ]
+    }
+  }
+}
 
 export const ProductFiles : CollectionConfig = {
   slug: 'product-files',
@@ -10,9 +66,10 @@ export const ProductFiles : CollectionConfig = {
     beforeChange: [addUserHook],
   },
   access: {
-    read: isAdminOrOwner,
+    // read: , // buyer or seller
     create: isAdminOrOwner,
-    update: isAdminOrOwner
+    update: isAdminOrOwner,
+    delete: ({req}) => req.user.role === 'admin'
   },
   fields: [
     {

@@ -12,6 +12,7 @@ export interface Config {
     products: Product;
     media: Media;
     'product-files': ProductFile;
+    orders: Order;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -46,10 +47,9 @@ export interface Product {
     image?: string | Media | null;
     id?: string | null;
   }[];
-  files: {
-    file?: string | ProductFile | null;
-    id?: string | null;
-  }[];
+  files: string | ProductFile;
+  priceId?: string | null;
+  stripeId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -93,7 +93,7 @@ export interface Media {
 }
 export interface ProductFile {
   id: string;
-  product: string | Product;
+  user: string | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -102,6 +102,14 @@ export interface ProductFile {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+}
+export interface Order {
+  id: string;
+  user: string | User;
+  products: (string | Product)[];
+  _isPayed: boolean;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface PayloadPreference {
   id: string;

@@ -1,14 +1,30 @@
 import { AfterChangeHook } from 'payload/dist/collections/config/types';
-import { CollectionConfig } from "payload/types";
+import { Access, CollectionConfig } from "payload/types";
 import { PRODUCT_CATEGORIES } from "../config";
 import { addUserHook } from '../lib/payload-utils';
-import { Product } from "../payload-types";
+import { Product, User } from "../payload-types";
 
 /* (todo): 
 -[ ] delete product after a user remove it from their product list 
 -[ ] only access to owner or admin, clients can read the product (i guess)
   - [ ] bug: another user can update the product
 */
+
+
+const isProductOwnerOrAdmin : Access = ({req, id: AccessedProductId}) => {
+  // access for admins
+  const user = req.user as User // (? why the teacher use user._user)
+  if(user.role === 'admin') return true
+
+  // access for owners
+  const userProducts = user.products ?? []
+  const isOwner = userProducts.findIndex((product)=>{
+    const productId = typeof product === 'string' ? product : product.id
+    return productId === AccessedProductId
+  })
+
+  return isOwner !== -1
+}
 
 const syncUser : AfterChangeHook<Product> = async ({req, doc}) => {
   const userId = req.user.id
@@ -44,6 +60,13 @@ export const Products: CollectionConfig = {
   admin:{
     useAsTitle: 'product_name',
   },
+  access:{
+    create: ({req}) => req.user,
+    read: isProductOwnerOrAdmin,
+    update: isProductOwnerOrAdmin,
+    delete: isProductOwnerOrAdmin,
+  },
+
   fields: [
     {
       name: 'user',
@@ -134,20 +157,11 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'files',
-      labels: {
-        singular: 'Product File',
-        plural: 'Product Files',
-      },
-      type: 'array',
-      minRows: 1,
+      label: 'Product file(s)',
+      type: 'relationship',
       required: true,
-      fields:[
-        {
-          name: 'file',
-          type: 'upload',
-          relationTo: 'product-files'
-        }
-      ]
+      relationTo: 'product-files',
+      hasMany: false,
     },
     {
       name: 'priceId',
