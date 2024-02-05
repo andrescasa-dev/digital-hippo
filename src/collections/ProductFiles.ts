@@ -1,8 +1,6 @@
-import { Access, CollectionConfig } from "payload/types";
-import { addUserHook, isAdminOrOwner } from "../lib/payload-utils";
 import { User } from "payload/dist/auth";
-import payload from "payload";
-import { string } from "zod";
+import { Access, CollectionConfig } from "payload/types";
+import { addUserHook } from "../lib/payload-utils";
 /* Todo
 -[ ] client access
 */
@@ -66,9 +64,8 @@ export const ProductFiles : CollectionConfig = {
     beforeChange: [addUserHook],
   },
   access: {
-    // read: , // buyer or seller
-    create: isAdminOrOwner,
-    update: isAdminOrOwner,
+    read: isBuyerOrSellerOrAdmin,
+    update: ({req}) => req.user.role === 'admin',
     delete: ({req}) => req.user.role === 'admin'
   },
   fields: [

@@ -1,4 +1,4 @@
-import { isAdminOrOwner } from "@/lib/payload-utils";
+import { isAdminOrOwner } from "../lib/payload-utils";
 import { CollectionConfig } from "payload/types";
 
 export const Orders : CollectionConfig = {
