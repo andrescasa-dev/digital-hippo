@@ -32,10 +32,12 @@ export default function ProductReel( props: productReelProps) {
   if(isLoading){
     products = fallbackProducts
   }
-
+  
+  console.log("products", products)
+  
     return (
     <section>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between mb-10'>
         <div className='max-w-2xl px-4 lg:max-w-4xl lg:px-0'>
           <h1 className='text-2xl font-bold text-gray-900 sm:text-3xl'>
             {title}
@@ -57,12 +59,6 @@ export default function ProductReel( props: productReelProps) {
         ) : null}
       </div>
       <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8 mt-4">
-        {products?.map((product, i)=>
-          <ListingProducts product={product} index={i} key={crypto.randomUUID()} />
-        )}
-        {products?.map((product, i)=>
-          <ListingProducts product={product} index={i} key={crypto.randomUUID()} />
-        )}
         {products?.map((product, i)=>
           <ListingProducts product={product} index={i} key={crypto.randomUUID()} />
         )}

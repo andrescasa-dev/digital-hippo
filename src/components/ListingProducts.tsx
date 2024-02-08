@@ -34,7 +34,7 @@ export default function ListingProducts({product, index} : ListingProductsProps)
   console.log('images urls', imageUrls)
   return (
     <Link 
-      href={'#'}
+      href={`product/${product.id}`}
       className="flex flex-col gap-1"
     >
       <ImageSlider urls={imageUrls}/>
