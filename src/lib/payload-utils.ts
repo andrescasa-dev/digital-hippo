@@ -31,3 +31,8 @@ export const isAdminOrOwner : Access = ({req}) => {
     }
   }
 }
+
+export const isUnloggedFrontendUser : Access = ({req}) => {
+  const referer = req.headers.referer
+  return !req.user || !referer?.includes('sell')
+}

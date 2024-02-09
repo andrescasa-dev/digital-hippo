@@ -1,9 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import { addUserHook, isAdminOrOwner } from "../lib/payload-utils";
-
-/* Todo
--[ ] frontend client access
-*/
+import { addUserHook, isAdminOrOwner, isUnloggedFrontendUser } from "../lib/payload-utils";
 
 export const MediaFiles : CollectionConfig = {
   slug: 'media',
@@ -14,7 +10,9 @@ export const MediaFiles : CollectionConfig = {
     hidden: ({user}) => user.role !== 'admin'
   },
   access: {
-    read: isAdminOrOwner, 
+    read: ({req})=> {
+      return isUnloggedFrontendUser({req}) || isAdminOrOwner({req})
+    }, 
     create: isAdminOrOwner,
     update: isAdminOrOwner
   },
