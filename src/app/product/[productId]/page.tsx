@@ -1,7 +1,7 @@
+import AddToCartButton from "@/components/AddToCartButton"
 import ImageSlider from "@/components/ImageSlider"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import ProductReel from "@/components/ProductReel"
-import { Button } from "@/components/ui/button"
 import { getPayloadClient } from "@/get-payloadClient"
 import { formatPrice, getCategoryLabel, getValidImageUrls } from "@/lib/utils"
 import { Check, Shield, Slash } from "lucide-react"
@@ -97,9 +97,7 @@ export default async function productDetail(props: productDetailProps) {
           />
         </div>
         <div>
-          <Button className="w-full mb-6 py-5">
-              Add to cart
-          </Button>
+          <AddToCartButton product={product} />
           <p className="flex gap-2 text-sm justify-center text-muted-foreground">
             <Shield />
             30 Day Return Guarantee
