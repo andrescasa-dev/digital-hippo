@@ -17,7 +17,6 @@ export default function ListingProducts({product, index} : ListingProductsProps)
   }
   const {product_name, price, } = product
   const categoryLabel = PRODUCT_CATEGORIES.find((category) => category.value === product.category)?.name
-  console.log(product)
 
   const imageUrls = product.images.map(({image}) => {
     if(!image || image === null) return console.error(`product has no image. Product id: ${product.id}`)
@@ -31,7 +30,6 @@ export default function ListingProducts({product, index} : ListingProductsProps)
     }
   }).filter(Boolean) as string[]
  
-  console.log('images urls', imageUrls)
   return (
     <Link 
       href={`product/${product.id}`}

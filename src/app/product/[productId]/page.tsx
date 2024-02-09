@@ -40,7 +40,6 @@ export default async function productDetail(props: productDetailProps) {
   })
 
   const [product] = products
-  console.log("product", product)
   return (
     <MaxWidthWrapper>
       <div className="grid md:grid-cols-2 my-24 gap-x-8 gap-y-10 mx-auto max-w-2xl md:max-w-5xl mb-36">

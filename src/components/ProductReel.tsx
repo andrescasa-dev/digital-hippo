@@ -33,8 +33,6 @@ export default function ProductReel( props: productReelProps) {
     products = fallbackProducts
   }
   
-  console.log("products", products)
-  
     return (
     <section>
       <div className='flex items-center justify-between mb-10'>

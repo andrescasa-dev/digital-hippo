@@ -1,13 +1,21 @@
+'use client'
+
 import { ShoppingCart } from "lucide-react"
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 import Link from "next/link"
 import { buttonVariants } from "./ui/button"
 import { cn, formatPrice } from "@/lib/utils"
 import Image from "next/image"
+import { useCart } from "@/hooks/useCart"
+import CartItem from "./CartItem"
+import { ScrollArea } from "./ui/scroll-area"
 
 const Cart = () => {
-  const items = 0
+  const {items} = useCart()
   const fee = 1
+  const total = items.reduce((total, {price})=>{
+    return total + price
+  },0)
 
   const EmptyCart = () => (
     <div className="flex flex-col h-full justify-center items-center gap-2">
@@ -31,31 +39,62 @@ const Cart = () => {
     <Sheet>
       <SheetTrigger className="flex group items-center gap-2">
         <ShoppingCart className="w-5 h-5 text-gray-400 group-hover:text-gray-500" />
-        <span className="font-medium text-gray-700 group-hover:text-gray-800 text-sm">{items}</span>
+        <span className="font-medium text-gray-700 group-hover:text-gray-800 text-sm">{items.length}</span>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="flex flex-col max-h-screen">
         <SheetHeader>
           <SheetTitle className="flex gap-1 justify-center">
             Cart 
-            <span>({items})</span>
+            <span>({items.length})</span>
           </SheetTitle>
         </SheetHeader>
-        { items > 0 
+        { items.length > 0 
           ? (<>
-            <div>
+            <div className="flex flex-col h-[fit-content] overflow-hidden">
               <h3 className="py-4">Cart items</h3>
-              <div>
-                {/* cart items */}
+              <div className="flex flex-col gap-4 h-[fit-content] overflow-auto">
+                  {items.map(item => 
+                    <CartItem 
+                      key={item.id}
+                      product={item} 
+                    />
+                  )}
+                  {items.map(item => 
+                    <CartItem 
+                      key={item.id + 1}
+                      product={item} 
+                    />
+                  )}
+                  {items.map(item => 
+                    <CartItem 
+                      key={item.id + 2}
+                      product={item} 
+                    />
+                  )}
+                  {items.map(item => 
+                    <CartItem 
+                      key={item.id + 3}
+                      product={item} 
+                    />
+                  )}
+                  {items.map(item => 
+                    <CartItem 
+                      key={item.id + 4}
+                      product={item} 
+                    />
+                  )}
               </div>
               <section className="py-6 border-t border-gray-100 text-sm flex flex-col gap-2">
                 <div className="flex justify-between">
                   <span>Shipping</span><span>Free</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Transaction fee</span><span>{formatPrice(fee)}</span>
+                  <span>Transaction fee</span>
+                  <span>{formatPrice(fee)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Total</span><span>{formatPrice(fee)}</span>
+                  <span>Total</span>
+                  <span>{formatPrice(total)}</span>
                 </div>
               </section>
             </div>
