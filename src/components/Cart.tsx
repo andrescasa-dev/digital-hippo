@@ -52,38 +52,14 @@ const Cart = () => {
           ? (<>
             <div className="flex flex-col h-[fit-content] overflow-hidden">
               <h3 className="py-4">Cart items</h3>
-              <div className="flex flex-col gap-4 h-[fit-content] overflow-auto">
+              <ScrollArea className="flex flex-col gap-4 h-[fit-content] overflow-auto">
                   {items.map(item => 
                     <CartItem 
                       key={item.id}
                       product={item} 
                     />
                   )}
-                  {items.map(item => 
-                    <CartItem 
-                      key={item.id + 1}
-                      product={item} 
-                    />
-                  )}
-                  {items.map(item => 
-                    <CartItem 
-                      key={item.id + 2}
-                      product={item} 
-                    />
-                  )}
-                  {items.map(item => 
-                    <CartItem 
-                      key={item.id + 3}
-                      product={item} 
-                    />
-                  )}
-                  {items.map(item => 
-                    <CartItem 
-                      key={item.id + 4}
-                      product={item} 
-                    />
-                  )}
-              </div>
+              </ScrollArea>
               <section className="py-6 border-t border-gray-100 text-sm flex flex-col gap-2">
                 <div className="flex justify-between">
                   <span>Shipping</span><span>Free</span>

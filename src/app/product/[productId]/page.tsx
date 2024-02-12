@@ -48,20 +48,17 @@ export default async function productDetail(props: productDetailProps) {
             {
               BREADCRUMBS.map(({href, label}, i, breadcrumbArray)=>{
                 return (
-                  <>
-                    <li
-                      key={crypto.randomUUID()}>
-                      <a 
-                        href={href}
-                        className="text-sm text-muted-foreground font-medium capitalize"
-                        >
-                        {label}
-                      </a>
-                    </li>
+                  <li className="flex items-center" key={crypto.randomUUID()}>
+                    <a 
+                      href={href}
+                      className="text-sm text-muted-foreground font-medium capitalize"
+                      >
+                      {label}
+                    </a>
                     {i < breadcrumbArray.length - 1 
-                      ? <Slash className="mx-2 w-3 h-3 text-gray-300" /> 
+                      ? <Slash key={crypto.randomUUID()} className="mx-2 w-3 h-3 text-gray-300" /> 
                       : null }
-                  </>
+                  </li>
                 )
               })
             }

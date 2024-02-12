@@ -45,7 +45,7 @@ export default function Home() {
             </Button>
           </div>
         </section>
-        <ProductReel title="Brand new" subtitle="subtitle" href="#" query={{limit: 2, sort: 'desc'}} />
+        <ProductReel title="Brand new" subtitle="subtitle" href="#" query={{limit: 5, sort: 'desc'}} />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50 py-20">
         <MaxWidthWrapper >

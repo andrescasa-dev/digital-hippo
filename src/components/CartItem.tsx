@@ -9,7 +9,7 @@ export default function CartItem({product}: {product: Product}) {
   const category = getCategoryLabel(product)
   const {removeItem} = useCart()
   return (
-    <article className="flex gap-2 pr-1">
+    <article className="flex gap-2 pr-6">
       <Image src={imageUrl} alt="product image" height={100} width={100} />
       <div className="flex flex-col gap-2">
         <h2 className="font-medium capitalize text-base line-clamp-1">

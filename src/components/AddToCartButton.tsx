@@ -36,9 +36,10 @@ export default function AddToCartButton( {product}: addToCartButtonProps) {
   return (
     <Button 
       className={cn(
-        "w-full mb-6 py-5 capitalize",
+        "w-full mb-6 capitalize",
         {"bg-red-800": additionStatus === 'conflict'}
       )}
+      size={'lg'}
       disabled={additionStatus !== "waiting"} 
       onClick={handleClick}
       >
