@@ -9,13 +9,11 @@ import Image from "next/image"
 import { useCart } from "@/hooks/useCart"
 import CartItem from "./CartItem"
 import { ScrollArea } from "./ui/scroll-area"
+import { FEE } from "@/config"
 
 const Cart = () => {
-  const {items} = useCart()
-  const fee = 1
-  const total = items.reduce((total, {price})=>{
-    return total + price
-  },0)
+  const {items} = useCart()  
+  const total = items.reduce((total, {price}) => total + price, 0)
 
   const EmptyCart = () => (
     <div className="flex flex-col h-full justify-center items-center gap-2">
@@ -66,11 +64,11 @@ const Cart = () => {
                 </div>
                 <div className="flex justify-between">
                   <span>Transaction fee</span>
-                  <span>{formatPrice(fee)}</span>
+                  <span>{formatPrice(FEE)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Total</span>
-                  <span>{formatPrice(total)}</span>
+                  <span>{formatPrice(total + FEE)}</span>
                 </div>
               </section>
             </div>
