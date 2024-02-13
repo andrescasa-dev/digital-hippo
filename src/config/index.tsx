@@ -43,4 +43,4 @@ export const PRODUCT_CATEGORIES = [
   }
 ]
 
-export const FEE = 4
+export const FEE = 1

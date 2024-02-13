@@ -1,7 +1,7 @@
 import { AfterChangeHook } from 'payload/dist/collections/config/types';
 import { Access, CollectionConfig } from "payload/types";
 import { PRODUCT_CATEGORIES } from "../config";
-import { addUserHook } from '../lib/payload-utils';
+import { addUserHook, createStripeProduct } from '../lib/payload-utils';
 import { Product, User } from "../payload-types";
 
 /* (todo): 
@@ -54,7 +54,7 @@ const syncUser : AfterChangeHook<Product> = async ({req, doc}) => {
 export const Products: CollectionConfig = {
   slug: 'products',
   hooks:{
-    beforeChange: [addUserHook],
+    beforeChange: [addUserHook,createStripeProduct],
     afterChange: [syncUser]
   },
   admin:{
@@ -66,7 +66,7 @@ export const Products: CollectionConfig = {
     update: isProductOwnerOrAdmin,
     delete: isProductOwnerOrAdmin,
   },
-
+  
   fields: [
     {
       name: 'user',

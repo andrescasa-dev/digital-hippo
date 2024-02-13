@@ -5,14 +5,24 @@ import { FEE } from "@/config";
 import { useCart } from "@/hooks/useCart";
 import { cn, formatPrice, getCategoryLabel, getValidImageUrls } from "@/lib/utils";
 import { Product } from "@/payload-types";
+import { trpc } from "@/trpc/client";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
   const {items: products} = useCart()
   const subtotal = products.reduce((total, {price}) => total + price, 0)
   const total = subtotal + FEE
+  const router = useRouter()
+  const {mutate: createStripeSession, isLoading} = trpc.payment.createSession.useMutation({
+    onSuccess: ({ url })=>{
+      if(url){
+        router.push(url)
+      }
+    }
+  })
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -50,7 +60,10 @@ export default function Cart() {
             <span>order total</span>
             <span>{formatPrice(total)}</span>
           </div>
-          <Button size={'lg'} disabled={products.length === 0}>
+          <Button 
+            size={'lg'} 
+            disabled={(products.length === 0) ||  isLoading} 
+            onClick={() => createStripeSession({ ids: products.map(product => product.id)})}>
             Checkout
           </Button>
         </section>

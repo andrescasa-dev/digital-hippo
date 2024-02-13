@@ -1,8 +1,9 @@
-import { User } from "../payload-types"
+import { Product, User } from "../payload-types"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import { NextRequest } from "next/server"
 import { Access } from "payload/config"
 import { BeforeChangeHook, TypeWithID } from "payload/dist/collections/config/types"
+import { stripe } from "./stripe"
 
 export const getServerSideUser = async (cookies: NextRequest['cookies'] | ReadonlyRequestCookies) => {
   const token = cookies.get('payload-token')?.value
@@ -17,9 +18,6 @@ export const getServerSideUser = async (cookies: NextRequest['cookies'] | Readon
   return { user }
 }
 
-export const addUserHook : BeforeChangeHook = async ({req, data}) => {
-  return {...data, user: req.user.id}
-}
 
 export const isAdminOrOwner : Access = ({req}) => {
   if(!req.user ) return false
@@ -35,4 +33,36 @@ export const isAdminOrOwner : Access = ({req}) => {
 export const isUnloggedFrontendUser : Access = ({req}) => {
   const referer = req.headers.referer
   return !req.user || !referer?.includes('sell')
+}
+
+export const addUserHook : BeforeChangeHook = async ({req, data}) => {
+  return {...data, user: req.user.id}
+}
+
+
+export const createStripeProduct : BeforeChangeHook = async ({data, operation}) => {
+  const {product_name, price} = data as Product
+  let stripeProduct
+  if (operation === 'create') {
+    stripeProduct = await stripe.products.create({
+      name: product_name,
+      default_price_data:{
+        currency: 'USD',
+        unit_amount: Math.round(price * 100)
+      }
+    });
+  }
+  else{
+    const {stripeId, priceId} = data as Product
+    stripeProduct = await stripe.products.update(stripeId!, {
+      name: product_name,
+      default_price: priceId!
+    })
+  }
+
+  return{
+    ...data,
+    priceId: stripeProduct.default_price as string,
+    stripeId: stripeProduct.id
+  }
 }
