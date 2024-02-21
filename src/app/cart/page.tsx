@@ -6,7 +6,7 @@ import { useCart } from "@/hooks/useCart";
 import { cn, formatPrice, getCategoryLabel, getValidImageUrls } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { trpc } from "@/trpc/client";
-import { Check, X } from "lucide-react";
+import { Check, Loader2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -65,6 +65,7 @@ export default function Cart() {
             disabled={(products.length === 0) ||  isLoading} 
             onClick={() => createStripeSession({ ids: products.map(product => product.id)})}>
             Checkout
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin mr-1.5"/> : null}
           </Button>
         </section>
       </div>
