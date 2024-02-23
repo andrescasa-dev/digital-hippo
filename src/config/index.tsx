@@ -44,3 +44,5 @@ export const PRODUCT_CATEGORIES = [
 ]
 
 export const FEE = 1
+
+export const digitalHippoEmail = 'onboarding@resend.dev'

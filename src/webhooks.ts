@@ -1,8 +1,14 @@
-import express from 'express'
-import { stripe } from './lib/stripe';
+import express from 'express';
+import { Resend } from 'resend';
 import type Stripe from 'stripe';
-import { WebhookRequest } from './server';
 import { getPayloadClient } from './get-payloadClient';
+import { stripe } from './lib/stripe';
+import { WebhookRequest } from './server';
+import { ReceiptEmailHtml } from './components/email/ReceiptEmailHtml';
+import { Product } from './payload-types';
+import { digitalHippoEmail } from './config';
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export const stripeWebhookHandler = async (req: express.Request, res: express.Response) => {
   const webhookRequest = req as any as WebhookRequest
@@ -13,7 +19,7 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET || 'whsec_63bf016bebaae25e15ed5f11f11bb825ced37306ad17c6d3bb93022528e97ee0'
+      process.env.STRIPE_WEBHOOK_SECRET || ''
     )
   } catch (err) {
     console.error(`Webhook Error: ${
@@ -35,6 +41,7 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
 
   // asure existence of metadata needed
   const session = event.data.object as Stripe.Checkout.Session
+  session.metadata = {userId: '657b0952248ea1f0490b745d', orderId: '65cba19af370b99138e94630'}
   const userId = session?.metadata?.userId
   const orderId = session?.metadata?.orderId
   if(!userId || !orderId) {
@@ -69,7 +76,7 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
           equals: orderId
         }
       },
-      depth: 0
+      depth: 2
     })
 
     const [order] = orders
@@ -80,7 +87,6 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
     }
 
     // only the owner can lunch a event to modify his order.
-    console.log("order.user:",order.user)
     const userOrderId = typeof order.user === 'string' ? order.user : order.user.id
     if(userOrderId !== userId ) {
       console.error('Stripe Webhook error: invalid user')
@@ -99,9 +105,31 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
         _isPayed: true
       }
     })
+
+    // send email receipt
+    try {
+      if(order.products.some(product => typeof product === 'string')){
+        throw new Error('Invalid products: insufficient payload depth')
+      }
+      const products = order.products as Product[]
+      const data = await resend.emails.send({
+        from: digitalHippoEmail,
+        to: [user.email],
+        subject: 'Thanks for your order! This is your receipt.',
+        html: ReceiptEmailHtml({email: user.email, products, date: new Date(), orderId})
+      })
+      
+      if(data.error) throw new Error(data.error.message)
+      
+      console.log('Receipt email was send')
+      res.status(200).json({ data })
+    } catch (error) {
+      console.error(`Could not send Receipt email, Error: ${error instanceof Error ? error.message : 'unknown Error'}` )
+      res.status(500).json({ error })
+    }
   }
   else{
-    console.log('the stripe action is not being handle')
+    console.log('this stripe event is not being handle')
     // return res.status(400).send('invalid stripe action')
   }
   return res.status(200).send()

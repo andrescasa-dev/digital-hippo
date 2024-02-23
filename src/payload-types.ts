@@ -44,7 +44,7 @@ export interface Product {
   category: 'ui_kit' | 'icons';
   approvedForSales: 'pending' | 'approved' | 'denied';
   images: {
-    image?: string | Media | null;
+    image: string | Media;
     id?: string | null;
   }[];
   files: string | ProductFile;
