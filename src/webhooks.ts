@@ -3,10 +3,10 @@ import { Resend } from 'resend';
 import type Stripe from 'stripe';
 import { getPayloadClient } from './get-payloadClient';
 import { stripe } from './lib/stripe';
-import { WebhookRequest } from './server';
 import { ReceiptEmailHtml } from './components/email/ReceiptEmailHtml';
 import { Product } from './payload-types';
 import { digitalHippoEmail } from './config';
+import { WebhookRequest } from './middlewares';
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 

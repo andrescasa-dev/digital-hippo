@@ -1,12 +1,11 @@
+import { inferAsyncReturnType } from '@trpc/server';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
 import { getPayloadClient } from './get-payloadClient';
+import { authMiddleware, webhookMiddleware } from './middlewares';
 import { nextRequestHandler, nextServer } from './next-utils';
 import { appRouter } from './trpc';
-import { inferAsyncReturnType } from '@trpc/server';
 import { stripeWebhookHandler } from './webhooks';
-import { IncomingMessage } from 'http';
-import bodyParser from 'body-parser';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000
@@ -22,18 +21,9 @@ const createContext = ({
 
 export type ExpressContext = inferAsyncReturnType<typeof createContext>
 
-export type WebhookRequest = IncomingMessage & {
-  rawBody: Buffer
-}
+
 
 const start = async () => {
-
-  const webhookMiddleware = bodyParser.json({
-    verify: (req: WebhookRequest, _, buffer) => {
-      req.rawBody = buffer
-    },
-  })
-
   app.post('/api/webhooks/stripe', webhookMiddleware, stripeWebhookHandler)
 
   // Initialization of payload and being cached
@@ -46,13 +36,16 @@ const start = async () => {
     },
   })
 
+  // Protected routes
+  app.use('/cart', payload.authenticate, authMiddleware)
+
   // Middleware for connecting trpc
   app.use('/api/trpc', trpcExpress.createExpressMiddleware({
       router: appRouter,
       createContext,
     })
   )
-  // Middleware for connecting NextJS
+  // Middleware that delegate the render process to NextJS for non-handle routes
   app.use((req,res) => nextRequestHandler(req,res))
 
   nextServer.prepare().then(() => {
