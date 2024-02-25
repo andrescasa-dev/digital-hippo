@@ -21,8 +21,6 @@ const createContext = ({
 
 export type ExpressContext = inferAsyncReturnType<typeof createContext>
 
-
-
 const start = async () => {
   app.post('/api/webhooks/stripe', webhookMiddleware, stripeWebhookHandler)
 
