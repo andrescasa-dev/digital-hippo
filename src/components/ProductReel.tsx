@@ -34,7 +34,7 @@ export default function ProductReel( props: productReelProps) {
   }
   
     return (
-    <section>
+    <section className="mb-12">
       <div className='flex items-center justify-between mb-10'>
         <div className='max-w-2xl px-4 lg:max-w-4xl lg:px-0'>
           <h1 className='text-2xl font-bold text-gray-900 sm:text-3xl'>

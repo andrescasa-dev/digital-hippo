@@ -32,6 +32,6 @@ export function getValidImageUrls (product : Product) {
   }).filter(Boolean) as string[]
 }
 
-export function getCategoryLabel (product: Product){
-  return PRODUCT_CATEGORIES.find((category) => category.value === product.category)?.name
+export function getCategoryLabel (category: string){
+  return PRODUCT_CATEGORIES.find((productCategory) => productCategory.value === category)?.name
 }

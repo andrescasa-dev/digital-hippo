@@ -45,9 +45,14 @@ export default function Home() {
             </Button>
           </div>
         </section>
-        <ProductReel title="Brand new" subtitle="subtitle" href="#" query={{limit: 5, sort: 'desc'}} />
+        <ProductReel 
+          title="Brand new" 
+          subtitle="subtitle" 
+          href="/products?sort=recent" 
+          query={{limit: 5, sort: 'desc'}} 
+        />
       </MaxWidthWrapper>
-      <section className="border-t border-gray-200 bg-gray-50 py-20">
+      <section className="border-t border-gray-200 bg-gray-50 py-20 ">
         <MaxWidthWrapper >
           <div className=" grid grid-cols-[repeat(auto-fit,minmax(35ch,1fr))] gap-4 gap-y-12 justify-center">
             {perks.map((perk, i)=>(

@@ -65,7 +65,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0'>
+    <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0 mb-20'>
       <div onSubmit={handleSubmit(onSubmit)} className="grid gap-2 grid-cols-[300px]">
         <Icons.logo className="h-20 w-20 justify-self-center" />
         <h1 className="justify-self-center">Sign {isSeller ? 'into your seller account' : 'in'} </h1>

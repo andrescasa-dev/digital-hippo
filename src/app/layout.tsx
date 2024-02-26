@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import Providers from '@/components/Providers'
 import { Toaster } from 'sonner'
 import NavBar from '@/components/NavBar'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           <main>
             {children}
           </main>
+          <Footer />
         </Providers>
         <Toaster position='top-center' richColors={true} />
       </body>

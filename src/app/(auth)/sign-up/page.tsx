@@ -43,7 +43,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0'>
+    <div className='container relative flex pt-20 flex-col items-center justify-center lg:px-0 mb-20'>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 grid-cols-[300px]">
         <Icons.logo className="h-20 w-20 justify-self-center" />
         <h1 className="justify-self-center">Create an account</h1>

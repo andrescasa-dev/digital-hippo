@@ -112,7 +112,7 @@ function CartPageItem({product, i, length}: {product: Product, i: number, length
             {product_name}
           </Link>
         </h3>
-        <p className="text-muted-foreground">Category: {getCategoryLabel(product)}</p>
+        <p className="text-muted-foreground">Category: {getCategoryLabel(product.category)}</p>
         <p className="font-medium ">{formatPrice(price)}</p>
         <p className="te-gray-700 flex mt-4 gap-1"> 
           <Check 

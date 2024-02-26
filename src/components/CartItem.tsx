@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function CartItem({product}: {product: Product}) {
   const imageUrl = getValidImageUrls(product)[0]
-  const category = getCategoryLabel(product)
+  const category = getCategoryLabel(product.category)
   const {removeItem} = useCart()
   return (
     <article className="flex gap-2 pr-6">

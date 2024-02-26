@@ -15,7 +15,7 @@ const VerifyEmailPage = ({ searchParams }: ServerProps) => {
 
   if(tokenNotProvided){
     return (
-      <div className="my-auto flex flex-col gap-2 items-center pt-10">
+      <div className="my-auto flex flex-col gap-2 items-center pt-10 mb-20">
         <Image src={'/hippo-email-sent.png'} height={300} width={300} alt="hippo with an email"/>
         <h1 className="text-xl font-bold">
           Check your email

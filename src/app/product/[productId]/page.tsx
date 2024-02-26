@@ -78,7 +78,7 @@ export default async function productDetail(props: productDetailProps) {
               className="text-muted-foreground"
               aria-label="category"
             >
-              {getCategoryLabel(product)}
+              {getCategoryLabel(product.category)}
             </li>
           </ul>
           <p className="text-muted-foreground text-base">{product.description}</p>

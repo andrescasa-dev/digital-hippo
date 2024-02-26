@@ -88,7 +88,7 @@ async function thankYouPage({searchParams}: props) {
                     alt="productImage" 
                   />
                   <div className="flex flex-col justify-between p-1">
-                    <p className="text-muted-foreground font-medium">Category: {getCategoryLabel(product)}</p>
+                    <p className="text-muted-foreground font-medium">Category: {getCategoryLabel(product.category)}</p>
                     {
                       _isPayed && 
                       <a 
