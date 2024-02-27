@@ -7,7 +7,6 @@ import { buttonVariants } from "./ui/button"
 import { usePathname } from "next/navigation"
 
 function Footer() {
-  
   const pathName = usePathname()
   const toMinimize = ['/sign-up', '/sign-in','/verify-email']
   return (

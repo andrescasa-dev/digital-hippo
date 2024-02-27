@@ -5,8 +5,8 @@ import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
 import { PropsWithChildren } from 'react'
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
 
 function HamburgerNav({children}: PropsWithChildren) {
   return (
@@ -18,7 +18,7 @@ function HamburgerNav({children}: PropsWithChildren) {
         <ScrollArea className='flex flex-col h-[80%] overflow-auto my-4'>
           {PRODUCT_CATEGORIES.map(({name, items}) => (
            <div key={crypto.randomUUID()}>
-              <h2 className='border-gray-200 border-b-2 whitespace-nowrap py-4 mb-4 text-base font-medium'>
+              <h2 className='border-gray-200 border-b whitespace-nowrap py-4 mb-4 text-base font-medium'>
                 {name}
               </h2>
               <ul className='grid grid-cols-2 gap-y-10 gap-x-4'>

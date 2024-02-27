@@ -1,14 +1,13 @@
 'use client'
 
+import { User } from "@/payload-types"
 import { DropdownMenu, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import Link from "next/link"
+import SignOutButton from "./SignOutButton"
 import { Button } from "./ui/button"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "./ui/dropdown-menu"
-import Link from "next/link"
-import { User } from "@/payload-types"
-import useAuth from "@/hooks/useSignOut"
 
 const NavDropdown = ({ user }: {user: User}) => {
-  const {signOut} = useAuth()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -23,26 +22,21 @@ const NavDropdown = ({ user }: {user: User}) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className='bg-white w-60'
+        className='bg-white w-60 [&>*]:cursor-pointer [&>:first-child]:cursor-default'
         align='end'>
-        <div className='flex items-center justify-start gap-2 p-2'>
+        <div className='flex items-center justify-start gap-2 p-2 cursor-none'>
           <div className='flex flex-col space-y-0.5 leading-none'>
             <p className='font-medium text-sm text-black'>
               {user.email}
             </p>
           </div>
         </div>
-
         <DropdownMenuSeparator />
-
         <DropdownMenuItem asChild>
           <Link href='/sell'>Seller Dashboard</Link>
         </DropdownMenuItem>
-
-        <DropdownMenuItem
-          onClick={signOut}
-          className='cursor-pointer'>
-          Log out
+        <DropdownMenuItem>
+          <SignOutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
