@@ -7,6 +7,10 @@ import Providers from '@/components/Providers'
 import { Toaster } from 'sonner'
 import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
+import HamburgerNav from '@/components/HamburgerNav'
+import { FooterHamburgerNav } from '@/components/FooterHamburgerNav'
+import { Suspense } from 'react'
+import Fallback from '@/components/Fallback'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +28,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, 'antialiased')}>
         <Providers>
-          <Header> 
+          <Header>
+            <HamburgerNav>
+              <Suspense>
+                <FooterHamburgerNav />
+              </Suspense>
+            </HamburgerNav>
             <NavBar/>
           </Header>
           <main>

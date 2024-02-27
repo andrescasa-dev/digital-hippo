@@ -13,9 +13,9 @@ function Footer() {
   return (
     <footer className="flex flex-col gap-10 pt-16 pb-10 border-t ">
       {!toMinimize.includes(pathName) && <LogoAndCTA />}
-      <MaxWidthWrapper className="flex justify-between text-sm text-muted-foreground">
-        <p>	&#169; 2024 All Rights Reserved</p>
-        <div>
+      <MaxWidthWrapper className="flex flex-wrap gap-4 justify-center items-center sm:justify-between text-sm text-muted-foreground">
+        <p className="">	&#169; 2024 All Rights Reserved</p>
+        <div className="flex flex-wrap justify-center">
           <Link href={'#'} className={buttonVariants({variant: "link"})}> Terms</Link>
           <Link href={'#'} className={buttonVariants({variant: "link"})}> Privacy Policy</Link>
           <Link href={'#'} className={buttonVariants({variant: "link"})}> Cookie Policy</Link>

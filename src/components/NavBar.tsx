@@ -12,7 +12,7 @@ const NavBar = async () => {
   const nextCookies = cookies()
   const { user } = await getServerSideUser(nextCookies)  
   return (
-    <nav className="hidden md:flex justify-between grow">
+    <nav className="hidden sm:flex justify-between grow">
       <div className="flex gap-8">
         {PRODUCT_CATEGORIES.map((category) => (
           <NavItem key={category.value} category={category} />

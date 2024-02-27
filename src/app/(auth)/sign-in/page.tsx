@@ -9,6 +9,7 @@ import { Credentials, credentialsSchema } from "@/lib/validators/account-credent
 import { trpc } from "@/trpc/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
+import { revalidatePath } from "next/cache"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
@@ -44,7 +45,8 @@ export default function SignInPage() {
         router.push(`${originParam}`)
         return
       }
-
+      revalidatePath('/')
+      console.log('revalidated')
       router.push('/')
     }
   })

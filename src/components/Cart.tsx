@@ -11,7 +11,7 @@ import CartItem from "./CartItem"
 import { ScrollArea } from "./ui/scroll-area"
 import { FEE } from "@/config"
 
-const Cart = () => {
+const Cart = ({className}: {className?:string}) => {
   const {items} = useCart()  
   const total = items.reduce((total, {price}) => total + price, 0)
 
@@ -35,11 +35,11 @@ const Cart = () => {
   
   return (
     <Sheet>
-      <SheetTrigger className="flex group items-center gap-2">
+      <SheetTrigger className={cn("flex group items-center gap-2", className)}>
         <ShoppingCart className="w-5 h-5 text-gray-400 group-hover:text-gray-500" />
         <span className="font-medium text-gray-700 group-hover:text-gray-800 text-sm">{items.length}</span>
       </SheetTrigger>
-      <SheetContent className="flex flex-col max-h-screen">
+      <SheetContent className="flex flex-col max-h-screen w-full">
         <SheetHeader>
           <SheetTitle className="flex gap-1 justify-center">
             Cart 
