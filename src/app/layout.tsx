@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer'
-import { FooterHamburgerNav } from '@/components/FooterHamburgerNav'
+import { UserAccountHamburger } from '@/components/UserAccountHamburger'
 import HamburgerNav from '@/components/HamburgerNav'
 import Header from '@/components/Header'
 import NavBar from '@/components/NavBar'
@@ -10,6 +10,7 @@ import { Inter } from 'next/font/google'
 import { Suspense } from 'react'
 import { Toaster } from 'sonner'
 import './globals.css'
+import UserAccountNavBar from '@/components/UserAccountNavBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,14 +25,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, 'antialiased')}>
         <Providers>
-          <Header>
-            <HamburgerNav>
-              <Suspense>
-                <FooterHamburgerNav />
-              </Suspense>
-            </HamburgerNav>
-            <NavBar/>
-          </Header>
+          <Header 
+            UserAccountHamburger={<UserAccountHamburger />} 
+            UserAccountNavbar={<UserAccountNavBar/>}
+          />
           <main>
             {children}
           </main>

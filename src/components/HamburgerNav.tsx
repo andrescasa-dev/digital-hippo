@@ -5,10 +5,10 @@ import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PropsWithChildren } from 'react'
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet'
+import { ReactNode } from 'react'
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetTrigger } from './ui/sheet'
 
-function HamburgerNav({children}: PropsWithChildren) {
+function HamburgerNav({UserAccountHamburger}: {UserAccountHamburger:ReactNode}) {
   return (
     <Sheet>
       <SheetTrigger className='sm:hidden -order-1'>
@@ -47,7 +47,9 @@ function HamburgerNav({children}: PropsWithChildren) {
            </div>
           ))}
         </ScrollArea>
-        {children}
+        <SheetFooter className='border-t border-gray-200 py-6 flex flex-col gap-4'>
+          {UserAccountHamburger}
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   )

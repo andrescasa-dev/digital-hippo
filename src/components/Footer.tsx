@@ -5,6 +5,7 @@ import { Icons } from "./Icons"
 import MaxWidthWrapper from "./MaxWidthWrapper"
 import { buttonVariants } from "./ui/button"
 import { usePathname } from "next/navigation"
+import { ArrowRight } from "lucide-react"
 
 function Footer() {
   const pathName = usePathname()
@@ -37,10 +38,10 @@ const LogoAndCTA = () => {
         <p className='mt-2 text-sm text-muted-foreground max-w-sm text-center'>
           If you&apos;d like to sell high-quality digital products, you can do so in minutes.{' '}
           <Link 
-            className='whitespace-nowrap font-medium text-black hover:text-zinc-900'
+            className='whitespace-nowrap font-medium text-black hover:text-zinc-900 inline-flex gap-0 items-center'
             href={'/sign-up?as=seller'}
           > 
-            Get started &rarr; 
+            Get started <ArrowRight aria-hidden={true} className="w-4 h-3"/> 
           </Link>
         </p>
       </div>

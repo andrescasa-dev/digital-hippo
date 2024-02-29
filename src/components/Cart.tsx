@@ -3,7 +3,7 @@
 import { ShoppingCart } from "lucide-react"
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 import Link from "next/link"
-import { buttonVariants } from "./ui/button"
+import { Button, buttonVariants } from "./ui/button"
 import { cn, formatPrice } from "@/lib/utils"
 import Image from "next/image"
 import { useCart } from "@/hooks/useCart"
@@ -35,9 +35,11 @@ const Cart = ({className}: {className?:string}) => {
   
   return (
     <Sheet>
-      <SheetTrigger className={cn("flex group items-center gap-2", className)}>
-        <ShoppingCart className="w-5 h-5 text-gray-400 group-hover:text-gray-500" />
-        <span className="font-medium text-gray-700 group-hover:text-gray-800 text-sm">{items.length}</span>
+      <SheetTrigger>
+        <Button variant={"ghost"}className={cn("flex group items-center gap-2", className)} aria-label="open cart">
+          <ShoppingCart className="w-5 h-5 text-gray-400 group-hover:text-gray-500" />
+          <span className="font-medium text-gray-700 group-hover:text-gray-800 text-sm">{items.length}</span>
+        </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col max-h-screen w-full">
         <SheetHeader>

@@ -2,7 +2,9 @@
 import { TProductQuerySchema } from "@/lib/validators/product-query-validator"
 import { trpc } from "@/trpc/client"
 import ListingProducts from "./ListingProducts"
+
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 
 type productReelProps  = {
@@ -50,9 +52,9 @@ export default function ProductReel( props: productReelProps) {
         {href ? (
           <Link
             href={href}
-            className='text-sm font-medium text-blue-600 hover:text-blue-500 md:block'>
+            className='text-sm font-medium text-blue-600 hover:text-blue-500 flex  items-center'>
             Shop the collection{' '}
-            <span aria-hidden='true'>&rarr;</span>
+            <ArrowRight aria-hidden={true} className="w-4 h-3"/>
           </Link>
         ) : null}
       </div>

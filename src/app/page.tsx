@@ -1,7 +1,7 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { ArrowDownToLine, CheckCircle, Leaf } from 'lucide-react';
+import { ArrowDownToLine, ArrowRight, CheckCircle, Leaf } from 'lucide-react';
 import Link from "next/link";
 
 export default function Home() {
@@ -40,8 +40,8 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href={'/products'} className={buttonVariants()}> browse trending</Link>
-            <Button variant={'ghost'}>
-              Our quality promise &rarr;
+            <Button variant={'ghost'} className="flex  items-center">
+              Our quality promise <ArrowRight aria-hidden={true} className="w-4 h-3"/>
             </Button>
           </div>
         </section>

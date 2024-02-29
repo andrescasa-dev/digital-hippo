@@ -5,6 +5,7 @@ import { getPayloadClient } from "@/get-payloadClient"
 import { getServerSideUser } from "@/lib/payload-utils"
 import { formatPrice, getCategoryLabel } from "@/lib/utils"
 import { Product, ProductFile, User } from "@/payload-types"
+import { ArrowRight } from "lucide-react"
 import { cookies } from "next/headers"
 import Image from "next/image"
 import Link from "next/link"
@@ -152,10 +153,10 @@ async function thankYouPage({searchParams}: props) {
           </section>
           <div className="border-t border-gray-200 flex justify-end pt-6">
             <Link 
-              className="text-blue-600 hover:text-blue-500 font-medium text-sm"
+              className="text-blue-600 hover:text-blue-500 font-medium text-sm flex items-center"
               href="/products"
             >
-              Continue Shopping &rarr;
+              Continue Shopping <ArrowRight aria-hidden={true} className="w-4 h-3"/>
             </Link>
           </div>
         </div>

@@ -1,37 +1,22 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useOnClickOutside } from "./useOnClickOutside"
-import { RefObject, useEffect } from "react"
+import { useCallback } from "react"
 
 
-const useCloseNavPanel = ( headerRef : RefObject<HTMLElement | null>) => {
+const useCloseNavPanel = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
 
-  const closeNav = () =>{
+  const closeNavPanel = useCallback(() =>{
     const params = new URLSearchParams(searchParams)
-    if(params.get('category')){
-      params.delete('category')
+    if(params.get('tab')){
+      params.delete('tab')
       console.log('nav panel closed')
       router.replace(`${pathname}?${params}`)
     }
-  }
+  },[pathname, router, searchParams])
 
-  useOnClickOutside(headerRef, () => closeNav())
-
-  useEffect(()=>{
-    const closeHandler = (e: KeyboardEvent) =>{
-      if(e.key === 'Escape'){
-        closeNav()
-      }
-    }
-    document.addEventListener('keydown',closeHandler)
-    return () => {
-      document.removeEventListener('keydown',closeHandler)
-    }
-  },[])
-
-  return 
+  return closeNavPanel
 }
 
 export default useCloseNavPanel

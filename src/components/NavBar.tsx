@@ -1,16 +1,25 @@
 
 import { PRODUCT_CATEGORIES } from "@/config"
-import Link from "next/link"
 import Cart from "./Cart"
 import NavItem from "./NavItem"
-import { buttonVariants } from "./ui/button"
-import { getServerSideUser } from "@/lib/payload-utils"
-import { cookies } from 'next/headers'
-import NavDropdown from "./NavDropdown"
+import { ReactNode, useEffect } from "react"
+import useCloseNavPanel from "@/hooks/useCloseNavPanel"
 
-const NavBar = async () => {
-  const nextCookies = cookies()
-  const { user } = await getServerSideUser(nextCookies)  
+function NavBar({UserAccountNavBar}:{UserAccountNavBar:ReactNode}) {
+  const closeNavPanel = useCloseNavPanel()
+
+  useEffect(()=>{
+    const closeHandler = (e: KeyboardEvent) =>{
+      if(e.key === 'Escape'){
+        closeNavPanel()
+      }
+    }
+    document.addEventListener('keydown',closeHandler)
+    return () => {
+      document.removeEventListener('keydown',closeHandler)
+    }
+  },[closeNavPanel])
+  
   return (
     <nav className="hidden sm:flex justify-between grow">
       <div className="flex gap-8">
@@ -18,23 +27,8 @@ const NavBar = async () => {
           <NavItem key={category.value} category={category} />
         ))}
       </div>
-      <div className="flex gap-4">
-        {user 
-          ? (
-            <NavDropdown user={user} />
-          )
-          : (
-          <>
-          <Link href={'/sign-in'} className={buttonVariants({variant: "ghost" })}>
-            Sign in
-          </Link>
-          <span className="bg-gray-100 h-full w-px" aria-hidden={"true"} />
-          <Link href={'/sign-up'} className={buttonVariants({variant: "ghost" })}>
-            Create Account
-          </Link>
-          </> 
-        )}
-        <span className="bg-gray-100 h-full w-px" aria-hidden={"true"} />
+      <div className="flex">
+        {UserAccountNavBar}
         <Cart />
       </div>
     </nav>

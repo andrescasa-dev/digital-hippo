@@ -5,12 +5,10 @@ import { SheetClose, SheetFooter } from './ui/sheet'
 import SignOutButton from './SignOutButton'
 import { buttonVariants } from './ui/button'
 
-export async function FooterHamburgerNav() {
+export async function UserAccountHamburger() {
   const nextCookies = cookies()
   const {user} = await getServerSideUser(nextCookies)
-  return (
-    <SheetFooter className='border-t border-gray-200 py-6 flex flex-col gap-4'>
-      {
+  return (      
         user
         ? (
           <SheetClose>
@@ -37,7 +35,5 @@ export async function FooterHamburgerNav() {
           </div>
         
         )
-      }
-    </SheetFooter>
   )
 }

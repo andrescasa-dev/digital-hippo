@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { usePathname, useSearchParams, useRouter} from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import useCloseNavPanel from '@/hooks/useCloseNavPanel';
 
 type Category = (typeof PRODUCT_CATEGORIES)[number]
 
@@ -16,16 +17,12 @@ const NavItem = ({category} : {category: Category}) => {
   const router = useRouter()
   const pathname = usePathname()
   const params = new URLSearchParams(searchParams)
-  const currentCategory = params.get('category')
-
+  const currentTab = params.get('tab')
+  const closeNavPanel = useCloseNavPanel()
   const handleClick = () => {
-    if( currentCategory !== category.value){
-      params.set('category', category.value)
-    }
-    else{
-      params.delete('category')
-    }
-    
+    currentTab !== category.value 
+      ? params.set('tab', category.value)
+      : params.delete('tab')
     router.replace(`${pathname}?${params}`)
   }
 
@@ -36,25 +33,29 @@ const NavItem = ({category} : {category: Category}) => {
         className='flex gap-1'
         variant={'ghost'}
         onClick={handleClick}
+        aria-roledescription={`open navigation panel of ${category.name}`}
       >
         {category.name}
-        <ChevronDown className={cn(
-          "h-4 w-4 text-muted-foreground transition-all",
-          {"-rotate-180": currentCategory === category.value}
-        )} />
+        <ChevronDown 
+          aria-hidden={true}
+          className={cn(
+            "h-4 w-4 text-muted-foreground transition-all",
+            {"-rotate-180": currentTab === category.value}
+          )} 
+        />
       </Button>
-      {currentCategory === category.value && (
+      {currentTab === category.value && (
         <div className='absolute inset-0 top-full h-fit p-10 grid gap-6 grid-cols-[repeat(auto-fit,minmax(0px,1fr))] bg-gray-100'>
           {category.items.map((item, i) => (
-            <Link href={item.href} key={i} className='flex flex-col gap-3'>
-              <div className='relative aspect-video bg-gray-200'>
+            <Link  href={item.href} key={i} className='flex flex-col gap-3'>
+              <button onClick={()=> closeNavPanel()} className='relative aspect-video bg-gray-200'>
                 <Image
                   fill
                   className='object-cover object-center rounded-md'
                   src={item.imageSrc}
                   alt={`Image of ${item.name}`}
                 />
-              </div>
+              </button>
               <p className='font-medium text-gray-900'>{item.name}</p>
               <p className='text-muted-foreground -mt-2' aria-hidden='true'>shop now</p>
             </Link>

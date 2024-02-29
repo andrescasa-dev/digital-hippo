@@ -52,7 +52,7 @@ export default function ListingProducts({product, index} : ListingProductsProps)
 function ListingProductSkeleton(){
   return (
     <div className="flex flex-col gap-1">
-      <Skeleton className="h-full w-full" />
+      <Skeleton className="w-full aspect-square" />
       <Skeleton className="h-5 w-3/4" />
       <Skeleton className="h-5 w-1/4" />
     </div>

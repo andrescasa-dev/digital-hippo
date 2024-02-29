@@ -6,18 +6,22 @@ import Link from "next/link"
 import SignOutButton from "./SignOutButton"
 import { Button } from "./ui/button"
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "./ui/dropdown-menu"
+import { cn } from "@/lib/utils"
+import { ChevronDown, User as UserIcon } from "lucide-react"
 
-const NavDropdown = ({ user }: {user: User}) => {
+const NavDropdown = ({ user, className }: {user: User, className: string}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
-        className='overflow-visible'>
+        className={cn('overflow-visible', className)}>
         <Button
           variant='ghost'
           size='sm'
-          className='relative'>
+          className='relative flex gap-1'>
+          <UserIcon fill="#F9FAFB" className="h-4 w-4 text-gray-400" />
           My account
+          <ChevronDown className="h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
 
