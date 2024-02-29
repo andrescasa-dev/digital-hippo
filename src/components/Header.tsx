@@ -16,7 +16,7 @@ const Header = ({ UserAccountNavbar, UserAccountHamburger}: {UserAccountNavbar: 
   useOnClickOutside(headerRef, () => closeNavPanel())  
 
   return (
-    <header ref={headerRef} className="sticky top-0 bg-white z-10">
+    <header ref={headerRef} className="sticky top-0 bg-white z-50">
       <MaxWidthWrapper>
         <div className="border-b border-gray-100 flex py-4 justify-between gap-2">
           <HamburgerNav UserAccountHamburger={UserAccountHamburger}/>
