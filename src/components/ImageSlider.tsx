@@ -5,7 +5,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import type SwiperType from 'swiper'
-import 'swiper/css'
+import 'swiper/css';
+import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -71,27 +72,28 @@ export default function ImageSlider({urls}:ImageSliderProps) {
       </button>
     <Swiper 
       pagination={{
-        renderBullet: (_, className) => {
+        renderBullet: (index, className) => {
           return `<span class="rounded-full transition ${className}"></span>`
         },
       }}
+      onSwiper={(swiper)=> setSwiper(swiper)} 
       spaceBetween={50}
       modules={[Pagination]}
       slidesPerView={1}
       className='h-full w-full'
-      onSwiper={(swiper)=> setSwiper(swiper)} >
-        {urls.map(url => 
-          <SwiperSlide         
-            key={crypto.randomUUID()}  
+    >
+      {urls.map(url => 
+        <SwiperSlide         
+          key={crypto.randomUUID()}  
         >
-            <Image
-              className='h-full w-full object-cover object-center -z-10'
-              fill 
-              src={url} 
-              alt="Product image" 
-            />
-          </SwiperSlide>
-        )}
+          <Image
+            className='h-full w-full object-cover object-center -z-10'
+            fill 
+            src={url} 
+            alt="Product image" 
+          />
+        </SwiperSlide>
+      )}
     </Swiper>
     </div>
   )

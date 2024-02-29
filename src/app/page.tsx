@@ -38,7 +38,7 @@ export default function Home() {
               platform is verified by our team to ensure our
               highest quality standards.
           </p>
-          <div className="flex flex-col md:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href={'/products'} className={buttonVariants()}> browse trending</Link>
             <Button variant={'ghost'}>
               Our quality promise &rarr;
@@ -46,15 +46,14 @@ export default function Home() {
           </div>
         </section>
         <ProductReel 
-          title="Brand new" 
-          subtitle="subtitle" 
+          title="Brand new"  
           href="/products?sort=recent" 
           query={{limit: 5, sort: 'desc'}} 
         />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50 py-20 ">
         <MaxWidthWrapper >
-          <div className=" grid grid-cols-[repeat(auto-fit,minmax(35ch,1fr))] gap-4 gap-y-12 justify-center">
+          <div className=" grid grid-cols-[repeat(auto-fit,minmax(30ch,1fr))] gap-16 gap-y-8 justify-center">
             {perks.map((perk, i)=>(
               <article key={i} className="flex flex-col items-center gap-2 text-center">
                 <div className=" h-16 w-16 bg-blue-100 text-blue-900 flex justify-center items-center rounded-full">

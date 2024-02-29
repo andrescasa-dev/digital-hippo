@@ -32,7 +32,7 @@ export default function ListingProducts({product, index} : ListingProductsProps)
  
   return (
     <Link 
-      href={`product/${product.id}`}
+      href={`/product/${product.id}`}
       className="flex flex-col gap-1"
     >
       <ImageSlider urls={imageUrls}/>
