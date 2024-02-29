@@ -1,6 +1,7 @@
 import { PRODUCT_CATEGORIES } from "../config"
 import { Product } from "@/payload-types"
 import { type ClassValue, clsx } from "clsx"
+import { Metadata } from "next"
 import { twMerge } from "tailwind-merge"
  
 export function cn(...inputs: ClassValue[]) {
@@ -34,4 +35,48 @@ export function getValidImageUrls (product : Product) {
 
 export function getCategoryLabel (category: string){
   return PRODUCT_CATEGORIES.find((productCategory) => productCategory.value === category)?.name
+}
+
+
+type CreateMetadataArgs = {
+  title?: string
+  description?: string
+  thumbnail?: string
+  icon?: string
+  noIndex?: boolean
+}
+
+export function createMetadata({
+  title = 'DigitalHippo - the marketplace for digital assets',
+  description= 'DigitalHippo is an open-source marketplace for high-quality digital goods.',
+  thumbnail = '/thumbnail.png',
+  icon = '/favicon.ico',
+  noIndex = false,
+}: CreateMetadataArgs = {}): Metadata {
+  return {
+    title,
+    description,
+    icons: icon,
+    openGraph:{
+      title,
+      description,
+      images:[{
+        width: 600,
+        height: 600,
+        url: thumbnail
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      creator: '@AndresCaAbout',
+      images: [thumbnail]
+    },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
+    robots: noIndex ? {
+      index: false,
+      follow: false,
+    } : undefined,
+  }
 }
