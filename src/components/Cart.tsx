@@ -16,7 +16,6 @@ const Cart = ({className}: {className?:string}) => {
   const {items} = useCart()  
   const total = items.reduce((total, {price}) => total + price, 0)
   const [isMounted, setIsMounted] = useState(false)
-  console.log('isMounted', isMounted)
 
   useEffect(()=>{
     setIsMounted(true)
