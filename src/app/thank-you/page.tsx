@@ -1,9 +1,8 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
-import { Button } from "@/components/ui/button"
 import { FEE } from "@/config"
 import { getPayloadClient } from "@/get-payloadClient"
 import { getServerSideUser } from "@/lib/payload-utils"
-import { formatPrice, getCategoryLabel } from "@/lib/utils"
+import { formatPrice, getCategoryLabel, getValidImageUrls } from "@/lib/utils"
 import { Product, ProductFile, User } from "@/payload-types"
 import { ArrowRight } from "lucide-react"
 import { cookies } from "next/headers"
@@ -79,31 +78,34 @@ async function thankYouPage({searchParams}: props) {
               </label>
               <p className="font-medium text-gray-900" id="orderNumber">{orderId}</p>
             </div>
-            <div className="grid">
-              {products.map(product => (
-                <div className="flex gap-6 text-sm" key={product.id}>
-                  <Image 
-                    className="rounded-md"
-                    src={'/checkout-thank-you.jpg'} 
-                    height={96} width={96} 
-                    alt="productImage" 
-                  />
-                  <div className="flex flex-col justify-between p-1">
-                    <p className="text-muted-foreground font-medium">Category: {getCategoryLabel(product.category)}</p>
-                    {
-                      _isPayed && 
-                      <a 
-                        href={(product.files as ProductFile).url as string} 
-                        download={product.product_name}
-                        className="text-blue-600 hover:text-blue-500 font-medium"
-                        >
-                          Download asset
-                      </a>
-                    }
-                  </div>
-                  <p className="ml-auto">{formatPrice(product.price)}</p>
-                </div>)
-              )}
+            <div className="grid gap-y-2 ">
+              {products.map(product =>{
+                const images = getValidImageUrls(product)
+                const [firstImage] = images
+                return(
+                  <div className="flex gap-6 text-sm" key={product.id}>
+                    <Image 
+                      className="rounded-md aspect-square object-cover"
+                      src={firstImage} 
+                      height={96} width={96} 
+                      alt="productImage" 
+                    />
+                    <div className="flex flex-col justify-between p-1">
+                      <p className="text-muted-foreground font-medium">Category: {getCategoryLabel(product.category)}</p>
+                      {
+                        _isPayed && 
+                        <a 
+                          href={(product.files as ProductFile).url as string} 
+                          download={product.product_name}
+                          className="text-blue-600 hover:text-blue-500 font-medium"
+                          >
+                            Download asset
+                        </a>
+                      }
+                    </div>
+                    <p className="ml-auto">{formatPrice(product.price)}</p>
+                  </div>)
+              })}
             </div>
             <div className="grid gap-y-6 text-sm font-medium text-gray-900">
               <div className="flex justify-between">

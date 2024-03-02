@@ -65,7 +65,7 @@ export default function Cart() {
             disabled={(products.length === 0) ||  isLoading} 
             onClick={() => createStripeSession({ ids: products.map(product => product.id)})}>
             Checkout
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin mr-1.5"/> : null}
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin ml-1.5"/> : null}
           </Button>
         </section>
       </div>

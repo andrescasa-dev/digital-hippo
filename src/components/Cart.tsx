@@ -11,15 +11,26 @@ import CartItem from "./CartItem"
 import { buttonVariants } from "./ui/button"
 import { ScrollArea } from "./ui/scroll-area"
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
+import { usePathname } from "next/navigation"
 
 const Cart = ({className}: {className?:string}) => {
-  const {items} = useCart()  
+  const {items, clear: clearCart} = useCart()
+  const pathName = usePathname()
   const total = items.reduce((total, {price}) => total + price, 0)
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(()=>{
     setIsMounted(true)
+    console.log('effect 1')
   },[])
+  
+   
+  useEffect(()=>{
+    if(pathName === '/thank-you'){
+      clearCart()
+    }
+    console.log('effect 2')
+  },[clearCart, pathName])
 
   const EmptyCart = () => (
     <div className="flex flex-col h-full justify-center items-center gap-2">
