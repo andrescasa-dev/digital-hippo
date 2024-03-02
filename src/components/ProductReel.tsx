@@ -37,7 +37,7 @@ export default function ProductReel( props: productReelProps) {
   
     return (
     <section className="mb-12">
-      <div className='flex items-center justify-between mb-10'>
+      <div className='flex flex-col min-[340px]:flex-row items-center justify-between mb-10'>
         <div className='max-w-2xl px-4 lg:max-w-4xl lg:px-0'>
           <h1 className='text-2xl font-bold text-gray-900 sm:text-3xl'>
             {title}
@@ -58,7 +58,7 @@ export default function ProductReel( props: productReelProps) {
           </Link>
         ) : null}
       </div>
-      <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8 mt-4">
+      <div className="w-full grid grid-cols-1 min-[340px]:grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8 mt-4">
         {products?.map((product, i)=>
           <ListingProducts product={product} index={i} key={crypto.randomUUID()} />
         )}

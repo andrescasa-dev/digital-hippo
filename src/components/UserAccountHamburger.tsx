@@ -11,7 +11,7 @@ export async function UserAccountHamburger() {
   return (      
         user
         ? (
-          <SheetClose>
+          <SheetClose asChild>
             <SignOutButton className={buttonVariants({variant:'link'})}/>
           </SheetClose>
         )

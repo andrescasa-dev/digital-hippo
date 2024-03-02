@@ -36,15 +36,17 @@ export default function ListingProducts({product, index} : ListingProductsProps)
       className="flex flex-col gap-1"
     >
       <ImageSlider urls={imageUrls}/>
-      <h3 className="font-medium capitalize text-sm text-gray-700 mt-3">
-        {product_name}
-      </h3>
-      <p className="color-muted text-gray-500 text-sm">
-        {categoryLabel}
-      </p>
-      <p className="font-medium text-gray-900 text-sm">
-        {formatPrice(price)}
-      </p>
+      <div className="flex min-[340px]:flex-col mt-3 gap-2 sm:gap-1 justify-between flex-wrap">
+        <h3 className="font-medium capitalize text-sm text-gray-700 w-full">
+          {product_name}
+        </h3>
+        <p className="color-muted text-gray-500 text-sm">
+          {categoryLabel}
+        </p>
+        <p className="font-medium text-gray-900 text-sm">
+          {formatPrice(price)}
+        </p>
+      </div>
     </Link>
   )
 }

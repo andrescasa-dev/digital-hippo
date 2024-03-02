@@ -21,7 +21,6 @@ const Cart = ({className}: {className?:string}) => {
 
   useEffect(()=>{
     setIsMounted(true)
-    console.log('effect 1')
   },[])
   
    
@@ -29,7 +28,6 @@ const Cart = ({className}: {className?:string}) => {
     if(pathName === '/thank-you'){
       clearCart()
     }
-    console.log('effect 2')
   },[clearCart, pathName])
 
   const EmptyCart = () => (
@@ -78,15 +76,17 @@ const Cart = ({className}: {className?:string}) => {
             ? (<>
               <div className="flex flex-col h-[fit-content] overflow-hidden">
                 <h3 className="py-4">Cart items</h3>
-                <ScrollArea className="flex flex-col gap-4 h-[fit-content] overflow-auto">
-                    {items.map(item => 
-                      <CartItem 
-                        key={item.id}
-                        product={item} 
-                      />
-                    )}
+                <ScrollArea className="h-[fit-content] overflow-auto">
+                    <div className="flex flex-col gap-4 ">
+                      {items.map(item =>
+                        <CartItem
+                          key={item.id}
+                          product={item}
+                        />
+                      )}
+                    </div>
                 </ScrollArea>
-                <section className="py-6 border-t border-gray-100 text-sm flex flex-col gap-2">
+                <section className="py-6 mt-6 border-t border-gray-100 text-sm flex flex-col gap-2">
                   <div className="flex justify-between">
                     <span>Shipping</span><span>Free</span>
                   </div>

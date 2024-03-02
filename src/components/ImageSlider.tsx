@@ -84,11 +84,13 @@ export default function ImageSlider({urls}:ImageSliderProps) {
     >
       {urls.map(url => 
         <SwiperSlide         
-          key={crypto.randomUUID()}  
+          key={crypto.randomUUID()}
+          className="h-64 w-64 relative"
         >
           <Image
             className='h-full w-full object-cover object-center -z-10'
-            fill 
+            fill
+            sizes="100vw, (min-width: 340px) 50vw, (min-width: 768px) 25vw"
             src={url} 
             alt="Product image" 
           />

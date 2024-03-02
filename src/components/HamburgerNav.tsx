@@ -32,6 +32,7 @@ function HamburgerNav({UserAccountHamburger}: {UserAccountHamburger:ReactNode}) 
                           <Image
                             className=' object-cover object-center'
                             fill
+                            sizes='50vw, (min-width: 640px) 180px'
                             src={catItem.imageSrc}
                             alt={catItem.name}
                           />

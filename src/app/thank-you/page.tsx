@@ -54,7 +54,9 @@ async function thankYouPage({searchParams}: props) {
             className="hidden lg:block object-cover object-center"
             src={"/checkout-thank-you.jpg"}
             fill={true}
+            sizes="100vw"
             alt="thank you image"
+            priority={true}
           />
         </div>
         <div className="grid gap-y-16 px-4 py-16 sm:px-6 sm:py-24 lg:py-32">

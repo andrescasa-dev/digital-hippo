@@ -51,6 +51,7 @@ const NavItem = ({category} : {category: Category}) => {
               <button onClick={()=> closeNavPanel()} className='relative aspect-video bg-gray-200'>
                 <Image
                   fill
+                  sizes='33vw'
                   className='object-cover object-center rounded-md'
                   src={item.imageSrc}
                   alt={`Image of ${item.name}`}

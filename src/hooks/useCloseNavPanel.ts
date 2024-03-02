@@ -11,7 +11,6 @@ const useCloseNavPanel = () => {
     const params = new URLSearchParams(searchParams)
     if(params.get('tab')){
       params.delete('tab')
-      console.log('nav panel closed')
       router.replace(`${pathname}?${params}`)
     }
   },[pathname, router, searchParams])
