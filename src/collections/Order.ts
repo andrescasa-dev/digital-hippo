@@ -4,8 +4,8 @@ import { CollectionConfig } from "payload/types";
 export const Orders : CollectionConfig = {
   slug: 'orders',
   admin:{
-    useAsTitle: 'Your orders',
-    description: 'A list of all your orders'
+    useAsTitle: 'My Purchases',
+    description: 'A list of all the orders that you made'
   },
   access: {
     create: ({req}) =>  req.user.rol === 'admin',

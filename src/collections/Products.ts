@@ -4,25 +4,23 @@ import { PRODUCT_CATEGORIES } from "../config";
 import { addUserHook, createStripeProduct } from '../lib/payload-utils';
 import { Product, User } from "../payload-types";
 
-/* (todo): 
--[ ] delete product after a user remove it from their product list 
--[ ] only access to owner or admin, clients can read the product (i guess)
-*/
-
-
-const isProductOwnerOrAdmin : Access = ({req, id: AccessedProductId}) => {
+const isProductOwnerOrAdmin : Access = ({req}) => {
+  const user = req.user as User
+  
   // access for admins
-  const user = req.user as User // (? why the teacher use user._user)
   if(user.role === 'admin') return true
 
   // access for owners
   const userProducts = user.products ?? []
-  const isOwner = userProducts.findIndex((product)=>{
-    const productId = typeof product === 'string' ? product : product.id
-    return productId === AccessedProductId
+  const userProductsIds = userProducts.map(product => {
+    return typeof product === 'string' ? product : product.id
   })
 
-  return isOwner !== -1
+  return {
+    id :{
+      in: userProductsIds
+    }
+  }
 }
 
 const syncUser : AfterChangeHook<Product> = async ({req, doc}) => {
@@ -50,31 +48,6 @@ const syncUser : AfterChangeHook<Product> = async ({req, doc}) => {
   })
 }
 
-const isAdminOrHasAccess =
-  (): Access => ({ req: { user: _user } }) => {
-    const user = _user as User | undefined
-
-    if (!user) return false
-    if (user.role === 'admin') return true
-
-    const userProductIDs = (user.products || []).reduce<Array<string>>((acc, product) => {
-      if (!product) return acc
-      if (typeof product === 'string') {
-        acc.push(product)
-      } else {
-        acc.push(product.id)
-      }
-
-      return acc
-    }, [])
-
-    return {
-      id: {
-        in: userProductIDs,
-      },
-    }
-  }
-
 export const Products: CollectionConfig = {
   slug: 'products',
   hooks:{
@@ -85,9 +58,9 @@ export const Products: CollectionConfig = {
     useAsTitle: 'product_name',
   },
   access:{
-    read: isAdminOrHasAccess(),
-    update: isAdminOrHasAccess(),
-    delete: isAdminOrHasAccess(),
+    read: isProductOwnerOrAdmin,
+    update: isProductOwnerOrAdmin,
+    delete: isProductOwnerOrAdmin,
   },
   
   fields: [
@@ -136,7 +109,7 @@ export const Products: CollectionConfig = {
       name: 'approvedForSales',
       label: 'Product Status',
       type: 'select',
-      defaultValue: 'pending',
+      defaultValue: 'approved',
       options: [
         {
           value: 'pending',

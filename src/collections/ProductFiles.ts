@@ -1,9 +1,6 @@
 import { User } from "payload/dist/auth";
 import { Access, CollectionConfig } from "payload/types";
 import { addUserHook } from "../lib/payload-utils";
-/* Todo
--[ ] client access
-*/
 
 const isBuyerOrSellerOrAdmin: Access = async ({req})=>{
   const userReq = req.user as User | null

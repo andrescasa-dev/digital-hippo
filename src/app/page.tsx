@@ -47,7 +47,7 @@ export default function Home() {
         </section>
         <ProductReel 
           title="Brand new"  
-          href="/products?sort=recent" 
+          href="/products?sort=desc" 
           query={{limit: 5, sort: 'desc'}} 
         />
       </MaxWidthWrapper>
