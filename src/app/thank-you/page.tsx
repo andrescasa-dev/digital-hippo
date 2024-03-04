@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import PaymentStatus from "@/components/PaymentStatus"
 import { FEE } from "@/config"
 import { getPayloadClient } from "@/get-payloadClient"
 import { getServerSideUser } from "@/lib/payload-utils"
@@ -141,20 +142,7 @@ async function thankYouPage({searchParams}: props) {
               <p id="total">{formatPrice(total)}</p>
             </div>
           </section>
-          <section className="flex justify-between text-sm text-gray-600">
-              <div>
-                <h4 className="font-medium text-gray-900">
-                  Shipping To
-                </h4>
-                <p>{email}</p>
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-900">
-                  Order Status
-                </h4>
-                <p>{_isPayed ? "idk" : "Pending payment"}</p>
-              </div>
-          </section>
+          <PaymentStatus email={email} _isPayed={_isPayed} orderId={orderId} />
           <div className="border-t border-gray-200 flex justify-end pt-6">
             <Link 
               className="text-blue-600 hover:text-blue-500 font-medium text-sm flex items-center"

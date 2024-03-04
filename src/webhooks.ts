@@ -11,6 +11,7 @@ import { WebhookRequest } from './middlewares';
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export const stripeWebhookHandler = async (req: express.Request, res: express.Response) => {
+
   const webhookRequest = req as any as WebhookRequest
   const body = webhookRequest.rawBody
   const signature = req.headers['stripe-signature'] || ''
@@ -38,10 +39,8 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
         }`
       )
   }
-
   // asure existence of metadata needed
   const session = event.data.object as Stripe.Checkout.Session
-  session.metadata = {userId: '657b0952248ea1f0490b745d', orderId: '65cba19af370b99138e94630'}
   const userId = session?.metadata?.userId
   const orderId = session?.metadata?.orderId
   if(!userId || !orderId) {
@@ -85,7 +84,6 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
       console.error('Stripe Webhook error: no such order')
       return res.status(404).send('Stripe Webhook error: no such order')
     }
-
     // only the owner can lunch a event to modify his order.
     const userOrderId = typeof order.user === 'string' ? order.user : order.user.id
     if(userOrderId !== userId ) {
@@ -93,19 +91,23 @@ export const stripeWebhookHandler = async (req: express.Request, res: express.Re
       return res.status(401).send('Stripe Webhook error: invalid user')
     }
 
-    // i need the metadato in order to update the order
-    payload.update({
-      collection: 'orders',
-      where: {
-        id: {
-          equals: orderId
+    // i need the metadata in order to update the order
+    try {
+      payload.update({
+        collection: 'orders',
+        where: {
+          id: {
+            equals: orderId
+          }
+        },
+        data: {
+          _isPayed: true
         }
-      },
-      data: {
-        _isPayed: true
-      }
-    })
-
+      })
+    } catch (error) {
+      console.error(`Could not update the db, Error: ${error instanceof Error ? error.message : 'unknown Error'}` )
+      res.status(500).json({ error })
+    }
     // send email receipt
     try {
       if(order.products.some(product => typeof product === 'string')){

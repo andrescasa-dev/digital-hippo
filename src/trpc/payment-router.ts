@@ -1,6 +1,6 @@
 
 import { privateProcedure, router } from "./trpc";
-import { sessionValidator } from "../lib/validators/session-validator";
+import { pollSessionValidator, sessionValidator } from "../lib/validators/session-validator";
 import { stripe } from "../lib/stripe";
 import { TRPCError } from "@trpc/server";
 import payload from "payload";
@@ -68,5 +68,27 @@ export const paymentRouter = router({
       throw new TRPCError({code: 'INTERNAL_SERVER_ERROR', message:`Error while creating session in stripe, Error: ${error}`})
     }
 
-  })
+  }),
+  pollOrderStatus: privateProcedure
+    .input(pollSessionValidator)
+    .query(async ({ input }) => {
+      const { orderId } = input
+
+      const { docs: orders } = await payload.find({
+        collection: 'orders',
+        where: {
+          id: {
+            equals: orderId,
+          },
+        },
+      })
+
+      if (!orders.length) {
+        throw new TRPCError({ code: 'NOT_FOUND' })
+      }
+
+      const [order] = orders
+
+      return { isPaid: order._isPayed }
+    }),
 })
