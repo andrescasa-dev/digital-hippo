@@ -87,7 +87,7 @@ export default async function productDetail(props: productDetailProps) {
             Eligible for instant delivery
           </p>
         </div>
-        <div className="md:row-span-2 max-w-2xl">
+        <div className="md:row-span-2 max-w-2xl overflow-hidden">
           <ImageSlider 
             urls={getValidImageUrls(product)}
           />
