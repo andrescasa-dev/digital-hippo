@@ -6,6 +6,8 @@ import { authMiddleware, webhookMiddleware } from './middlewares';
 import { nextRequestHandler, nextServer } from './next-utils';
 import { appRouter } from './trpc';
 import { stripeWebhookHandler } from './webhooks';
+import nextBuild from 'next/dist/build'
+import path from 'path';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000
@@ -23,7 +25,7 @@ export type ExpressContext = inferAsyncReturnType<typeof createContext>
 
 const start = async () => {
   app.post('/api/webhooks/stripe', webhookMiddleware, stripeWebhookHandler)
-
+  
   // Initialization of payload and being cached
   const payload = await getPayloadClient({
     initOptions: {
@@ -33,6 +35,21 @@ const start = async () => {
       },
     },
   })
+
+  if (process.env.NEXT_BUILD) {
+    app.listen(PORT, async () => {
+      payload.logger.info(
+        'Next.js is building for production'
+      )
+
+      // @ts-expect-error
+      await nextBuild(path.join(__dirname, '../'))
+
+      process.exit()
+    })
+
+    return
+  }
 
   // Protected routes
   app.use('/cart', payload.authenticate, authMiddleware)
