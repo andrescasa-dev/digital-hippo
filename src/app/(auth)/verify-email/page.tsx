@@ -1,6 +1,9 @@
 import VerifyEmail from "@/components/VerifyEmail"
-import { XCircle } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { buttonVariants } from "@/components/ui/button"
+import { AlertCircle, XCircle } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 interface ServerProps {
   searchParams: {
@@ -23,6 +26,14 @@ const VerifyEmailPage = ({ searchParams }: ServerProps) => {
         <p className="text-sm text-muted-foreground">
           we&apos;ve send a verification link to {email}
         </p>
+        {/* Bypass Email verification error */}
+        <Alert variant="destructive" className="w-auto">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            We are working on a email provider error, for the moment, this step is omitted, please: <Link href={'/sign-in'} className={buttonVariants({variant:"link"})}> Sign in</Link>
+          </AlertDescription>
+        </Alert>
       </div>
     )
   }
