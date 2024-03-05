@@ -34,7 +34,7 @@ export default function SignInPage() {
     },
     onSuccess: () => {
       toast.success('signed in successfully')
-      router.refresh()
+      
       if(isSeller){
         router.push('/sell')
         return
@@ -47,6 +47,7 @@ export default function SignInPage() {
       }
       console.log("going to home")
       router.push('/')
+      router.refresh()
     }
   })
 
