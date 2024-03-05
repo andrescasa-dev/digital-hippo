@@ -1,13 +1,14 @@
 import { getServerSideUser } from "@/lib/payload-utils"
-import { cookies } from "next/headers"
-import NavDropdown from "./NavDropdown"
-import Link from "next/link"
-import { buttonVariants } from "./ui/button"
 import { cn } from "@/lib/utils"
+import { cookies } from "next/headers"
+import Link from "next/link"
+import NavDropdown from "./NavDropdown"
+import { buttonVariants } from "./ui/button"
 
 async function UserAccountNavBar() {
   const nextCookies = cookies()
-  const { user } = await getServerSideUser(nextCookies)
+  const response = await getServerSideUser(nextCookies)
+  const {user} = response
   return (
     user 
       ? (

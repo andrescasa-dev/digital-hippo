@@ -54,21 +54,27 @@ export const authRouter = router({
   signIn: publicProcedure
     .input(credentialsSchema)
     .mutation( async ({input, ctx})=>{
-      const {email, password} = input
-      const {res} = ctx
-      const payload = await getPayloadClient()
       try {
+        const {email, password} = input
+        const {res} = ctx
+        const payload = await getPayloadClient()
         await payload.login({
           collection: 'users',
           data: {
             email,
             password
           },
-          res // (?) why is necessary to pass the express response? I think payload attach the Auth cookies to it.
+          res
         })
         return {success: true}
       } catch (error) {
-        throw new TRPCError({code: 'UNAUTHORIZED'})
+        if (error instanceof Error) {
+          console.log('Error on signIn endpoint', error)
+          throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
+        else{
+          throw new TRPCError({code: 'UNAUTHORIZED', message: 'empty message'})
+        }
       }
     })
 })

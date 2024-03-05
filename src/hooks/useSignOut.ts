@@ -17,7 +17,7 @@ const useAuth = () => {
       router.push('/sign-in')
       router.refresh()
     } catch (err) {
-      console.log(err)
+      console.error('error while sign-out: ', err)
       toast.error("couldn't sing-out")
     }
   }

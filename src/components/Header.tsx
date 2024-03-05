@@ -3,7 +3,7 @@
 import useCloseNavPanel from "@/hooks/useCloseNavPanel"
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 import Link from "next/link"
-import { ReactNode, useEffect, useRef } from "react"
+import { ReactNode, useRef } from "react"
 import Cart from "./Cart"
 import HamburgerNav from "./HamburgerNav"
 import { Icons } from "./Icons"

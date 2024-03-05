@@ -1,9 +1,9 @@
 import { getServerSideUser } from '@/lib/payload-utils'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import { SheetClose, SheetFooter } from './ui/sheet'
 import SignOutButton from './SignOutButton'
 import { buttonVariants } from './ui/button'
+import { SheetClose } from './ui/sheet'
 
 export async function UserAccountHamburger() {
   const nextCookies = cookies()

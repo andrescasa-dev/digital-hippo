@@ -5,5 +5,4 @@ export const credentialsSchema = z.object({
   password: string().min(8, { message: 'The password should be at least 8 characters'})
 })
 
-// (?) I don't understand this TS syntax
 export type Credentials = z.infer<typeof credentialsSchema>

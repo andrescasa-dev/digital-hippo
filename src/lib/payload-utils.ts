@@ -6,16 +6,25 @@ import { BeforeChangeHook, TypeWithID } from "payload/dist/collections/config/ty
 import { stripe } from "./stripe"
 
 export const getServerSideUser = async (cookies: NextRequest['cookies'] | ReadonlyRequestCookies) => {
-  const token = cookies.get('payload-token')?.value
-  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
-    {
-      headers: {
-        Authorization: `JWT ${token}`,
+  try {
+    const token = cookies.get('payload-token')?.value
+    if (!token) return {user: null}
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
+      {
+        headers: {
+          Authorization: `JWT ${token}`,
+        }
       },
+    )
+    if(!response.ok) {
+      throw new Error('error in fetching request')
     }
-  )
-  const {user} = (await response.json()) as {user:User| null} 
-  return { user }
+    const {user} = (await response.json()) as {user:User| null} 
+    return { user }
+  } catch (error) {
+    console.error('Error getting the user from payload: ' + error)
+    return { user: null }
+  }
 }
 
 

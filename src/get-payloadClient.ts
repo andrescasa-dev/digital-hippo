@@ -48,7 +48,7 @@ export const getPayloadClient = async ({ initOptions }: Args = {}): Promise<Payl
   }
   
   if (!cached.promise) {
-    cached.promise = payload.init({
+    const payloadInitOptions = {
       email: {
         transport: transporter,
         fromAddress: 'onboarding@resend.dev',
@@ -57,16 +57,19 @@ export const getPayloadClient = async ({ initOptions }: Args = {}): Promise<Payl
       secret: process.env.PAYLOAD_SECRET,
       local: initOptions?.express ? false : true,
       ...(initOptions || {}),
-    })
+    }
+    cached.promise = payload.init(payloadInitOptions)
   }
 
   try {
-    cached.client = await cached.promise
+    console.log('Initializing payload')
+    const payloadInitResponse = await cached.promise
+    cached.client = payloadInitResponse
   } catch (e: unknown) {
     cached.promise = null
     throw e
   }
-  
+
   return cached.client
 }
 

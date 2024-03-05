@@ -21,20 +21,23 @@ export default function SignInPage() {
   const isSeller = searchParams.get('as') === 'seller'
   const pathname = usePathname()
   const router = useRouter()
-
   const {register, handleSubmit, formState:{errors}} = useForm<Credentials>({
     resolver: zodResolver(credentialsSchema)
   })
 
   const {mutate: login, error, isLoading} = trpc.auth.signIn.useMutation({
     onError: (error) => {
+      console.error('error trying to sign in user', error)
       if(error.data?.code === 'UNAUTHORIZED'){
         toast.error('Invalid email or password')
+      }
+      else{
+        toast.error('Unknown Error')
       }
     },
     onSuccess: () => {
       toast.success('signed in successfully')
-      router.refresh()
+      
       if(isSeller){
         router.push('/sell')
         return
@@ -47,8 +50,11 @@ export default function SignInPage() {
       }
       console.log("going to home")
       router.push('/')
+      router.refresh()
     }
   })
+
+  console.log('error of tRCP', error)
 
   const onSubmit = ({email, password}: Credentials) => {
     login({email, password}) 
