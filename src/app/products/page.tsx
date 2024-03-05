@@ -24,7 +24,7 @@ function products(params: productsParams) {
         query={{
           limit: 40,
           category,
-          sort: sort === 'asc' || sort === 'desc' ? sort : undefined
+          sort: sort === 'createdAt' || sort === '-createdAt' ? sort : undefined
         }}
       />
     </MaxWidthWrapper>

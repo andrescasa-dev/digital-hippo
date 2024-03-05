@@ -47,8 +47,8 @@ export default function Home() {
         </section>
         <ProductReel 
           title="Brand new"  
-          href="/products?sort=desc" 
-          query={{limit: 5, sort: 'desc'}} 
+          href="/products?sort=createdAt" 
+          query={{limit: 5, sort: '-createdAt'}} 
         />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50 py-20 ">
