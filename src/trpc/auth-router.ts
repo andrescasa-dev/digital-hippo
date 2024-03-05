@@ -27,7 +27,8 @@ export const authRouter = router({
           password,
           role: 'user',
           _verified: true
-        }
+        },
+        disableVerificationEmail: true
       })
 
       return { success: true, sendToEmail: email}
