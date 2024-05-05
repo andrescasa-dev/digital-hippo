@@ -53,7 +53,7 @@ async function thankYouPage({searchParams}: props) {
         <div className="w-full relative">
           <Image
             className="hidden lg:block object-cover object-center"
-            src={"/checkout-thank-you.jpg"}
+            src={"/checkout-thank-you.webp"}
             fill={true}
             sizes="100vw"
             alt="thank you image"
