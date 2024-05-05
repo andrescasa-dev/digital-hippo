@@ -15,11 +15,11 @@ type productDetailProps = {
 const BREADCRUMBS = [
   {
     label: 'Home',
-    href: '#'
+    href: '/'
   },
   {
     label: 'Products',
-    href: '#'
+    href: '/products'
   }
 ]
 

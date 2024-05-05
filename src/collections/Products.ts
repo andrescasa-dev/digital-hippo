@@ -80,12 +80,14 @@ export const Products: CollectionConfig = {
       label: 'Title',
       type: 'text',
       required: true,
+      defaultValue: "Studio UI Template"
     },
     {
       name: 'description',
       label: 'Description',
       type: 'textarea',
       required: true,
+      defaultValue: "Enhance your projects with our Blue Studio UI Template, featuring elegant UI elements in soothing shades of blue. Perfect for creating a professional and modern look in web and mobile applications."
     }
     ,
     {
@@ -96,6 +98,7 @@ export const Products: CollectionConfig = {
       max: 1000,
       required: true,
       hasMany: false,
+      defaultValue: 10,
     },
     {
       name: 'category',
@@ -103,6 +106,7 @@ export const Products: CollectionConfig = {
       type: 'select',
       options: PRODUCT_CATEGORIES.map(({value, name})=>({value, label: name})),
       required: true,
+      defaultValue: PRODUCT_CATEGORIES[0].value,
       hasMany: false
     },
     {

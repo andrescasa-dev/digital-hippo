@@ -38,7 +38,7 @@ const isBuyerOrSellerOrAdmin: Access = async ({req})=>{
   const purchasedProductFilesIds = orders.map((order)=>{
     return order.products.map((product)=>{
       if(typeof product === 'string') 
-        return req.payload.logger.error('insufficient depth to find product files in an order')
+        return req.payload.logger.error('insufficient depth to find product files in an order ' + product )
       return typeof product.files === 'string' ? product.files : product.files.id
     })
   })

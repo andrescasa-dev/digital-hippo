@@ -105,6 +105,7 @@ function EmptyCart (){
 }
 
 function CartPageItem({product, i, length}: {product: Product, i: number, length: number}) {
+  const {removeItem} = useCart()
   const {product_name, price} = product
   const imageUrl = getValidImageUrls(product)[0]
   return (
@@ -134,7 +135,7 @@ function CartPageItem({product, i, length}: {product: Product, i: number, length
           <span>Eligible for instant delivery</span>
         </p>
       </div>
-      <Button variant={"ghost"} aria-label="remove product from cart" className="ml-auto mb-auto justify-center">
+      <Button onClick={()=>removeItem(product.id)} variant={"ghost"} aria-label="remove product from cart" className="ml-auto mb-auto justify-center">
         <X className=" h-4 w-4 text-gray-900" aria-hidden='true'/>
       </Button>
     </article>

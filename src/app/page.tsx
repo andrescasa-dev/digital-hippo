@@ -62,7 +62,7 @@ export default async function Home() {
               )
               : (
                 <Link 
-              href={'/sign-in'} 
+              href={'/sign-in?as=seller'} 
               className={cn(buttonVariants({variant: 'secondary'}), "flex items-center")}
               >
                 Become a seller 

@@ -42,7 +42,7 @@ const LogoAndCTA = () => {
           If you&apos;d like to sell high-quality digital products, you can do so in minutes.{' '}
           <Link 
             className={cn(buttonVariants({variant: 'link'}),'whitespace-nowrap font-medium inline-flex gap-0 py-0 p-1 items-center')}
-            href={'/sign-up?as=seller'}
+            href={'/sign-in?as=seller'}
           > 
             Get started <ArrowRight aria-hidden={true} className="w-4 h-3"/> 
           </Link>
