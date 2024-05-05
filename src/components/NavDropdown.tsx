@@ -37,10 +37,10 @@ const NavDropdown = ({ user, className }: {user: User, className: string}) => {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href='/sell'>Seller Dashboard</Link>
+          <Link className="w-full" href='/sell'>Seller Dashboard</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <SignOutButton />
+          <SignOutButton className="w-full flex" />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

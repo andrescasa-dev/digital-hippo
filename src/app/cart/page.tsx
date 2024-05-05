@@ -1,12 +1,14 @@
 'use client'
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { FEE } from "@/config";
 import { useCart } from "@/hooks/useCart";
+import { useCopy } from "@/hooks/useCopy";
 import { cn, formatPrice, getCategoryLabel, getValidImageUrls } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { trpc } from "@/trpc/client";
-import { Check, Loader2, X } from "lucide-react";
+import { AlertCircle, Check, Loader2, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,6 +25,7 @@ export default function Cart() {
       }
     }
   })
+  const copy = useCopy()
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -67,6 +70,15 @@ export default function Cart() {
             Checkout
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin ml-1.5"/> : null}
           </Button>
+          <Alert className="w-auto">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Don&apos;t worry it&apos;s not real but it could be.</AlertTitle>
+            <AlertDescription>
+              Test Card number: 4242 4242 4242 <Button className="p-0 h-auto" onClick={()=>copy('4242 4242 4242 4242 4242 4242 4242', 'credit card number')} variant={'link'}>Copy</Button>.
+              <br></br>
+              For the rest use dummy data.
+            </AlertDescription>
+          </Alert>
         </section>
       </div>
     </div>
@@ -77,7 +89,7 @@ function EmptyCart (){
   return (
     <div className="p-12 border-dashed border-zinc-200 border-2 rounded-lg text-center flex flex-col items-center gap-1"> 
       <Image 
-        src={'/hippo-empty-cart.png'} 
+        src={'/hippo-empty-cart.webp'} 
         alt="hippo with a empty supermarket cart" 
         height={160} 
         width={160}

@@ -39,7 +39,7 @@ const VerifyEmail = ({token} : {token: string}) => {
   if(data.success){
     return(
       <div className="my-auto flex flex-col gap-2 items-center pt-10">
-        <Image src={'/hippo-email-sent.png'} height={300} width={300} alt="hippo with an email"/>
+        <Image src={'/hippo-email-sent.webp'} height={300} width={300} alt="hippo with an email"/>
         <h1 className="text-xl font-bold">
           You&apos;re all set
         </h1>

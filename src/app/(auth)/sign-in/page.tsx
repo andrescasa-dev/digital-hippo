@@ -85,6 +85,7 @@ export default function SignInPage() {
           <div className="flex flex-col gap-2">
             <Label>Email</Label>
             <Input
+              defaultValue={'test@ejemplo.com'}
               className={cn({
                 'focus-visible:ring-red-500': errors.email
               })}
@@ -98,6 +99,7 @@ export default function SignInPage() {
           <div className="flex flex-col gap-2">
             <Label>Password</Label>
             <Input
+              defaultValue={'123456789'}
               className={cn({
                 'focus-visible:ring-red-500': errors.password
               })}

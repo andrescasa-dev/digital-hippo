@@ -1,7 +1,8 @@
 import VerifyEmail from "@/components/VerifyEmail"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { buttonVariants } from "@/components/ui/button"
-import { AlertCircle, XCircle } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { RocketIcon, XCircle } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -19,7 +20,7 @@ const VerifyEmailPage = ({ searchParams }: ServerProps) => {
   if(tokenNotProvided){
     return (
       <div className="my-auto flex flex-col gap-2 items-center pt-10 mb-20">
-        <Image src={'/hippo-email-sent.png'} height={300} width={300} alt="hippo with an email"/>
+        <Image src={'/hippo-email-sent.webp'} height={300} width={300} alt="hippo with an email"/>
         <h1 className="text-xl font-bold">
           Check your email
         </h1>
@@ -27,11 +28,11 @@ const VerifyEmailPage = ({ searchParams }: ServerProps) => {
           we&apos;ve send a verification link to {email}
         </p>
         {/* Bypass Email verification error */}
-        <Alert variant="destructive" className="w-auto">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            We are working on a email provider error, for the moment, this step is omitted, please: <Link href={'/sign-in'} className={buttonVariants({variant:"link"})}> Sign in</Link>
+        <Alert className="w-auto m-2">
+          <RocketIcon className="h-4 w-4" />
+          <AlertTitle>Email verification will come in the future</AlertTitle>
+          <AlertDescription className="text-muted-foreground">
+            We are working on it, for the moment just: <Link href={'/sign-in'} className={cn(buttonVariants({variant:"link"}),'p-0 px-1 h-auto')}> Sign in</Link>
           </AlertDescription>
         </Alert>
       </div>

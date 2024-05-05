@@ -49,7 +49,7 @@ type CreateMetadataArgs = {
 export function createMetadata({
   title = 'DigitalHippo - the marketplace for digital assets',
   description= 'DigitalHippo is an open-source marketplace for high-quality digital goods.',
-  thumbnail = '/thumbnail.png',
+  thumbnail = '/thumbnail.webp',
   icon = '/favicon.ico',
   noIndex = false,
 }: CreateMetadataArgs = {}): Metadata {

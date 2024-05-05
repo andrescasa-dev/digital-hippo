@@ -34,7 +34,7 @@ const Cart = ({className}: {className?:string}) => {
     <div className="flex flex-col h-full justify-center items-center gap-2">
       <Image
         className="bg-gray-100 rounded-md"
-        src={'/hippo-empty-cart.png'} 
+        src={'/hippo-empty-cart.webp'} 
         width={200} 
         height={200} 
         alt="hippo with an empty cart"
@@ -54,15 +54,16 @@ const Cart = ({className}: {className?:string}) => {
           aria-label="open cart"
           className={cn(
             buttonVariants({variant:'ghost'}),
-            "flex group items-center gap-1", 
+            "flex group items-center gap-1 text-primary", 
             className)} 
         >
-            <ShoppingCart className="w-5 h-5 text-gray-400 group-hover:text-gray-500" />
+            <ShoppingCart className="w-5 h-5 text-primary
+             group-hover:text-gray-500" />
             {isMounted 
-            ? <span className="w-4 h-4 font-medium text-gray-700 group-hover:text-gray-800 text-sm">
+            ? <span className="w-4 h-4 font-semibold group-hover:text-gray-800 text-sm">
                 {items.length}
               </span>
-            : <Loader2 className="w-4 h-4 spin-in-1 animate-spin text-gray-400" />
+            : <Loader2 className="w-4 h-4 spin-in-1 animate-spin text-primary opacity-50" />
             }
         </SheetTrigger>
         <SheetContent className="flex flex-col max-h-screen w-full">

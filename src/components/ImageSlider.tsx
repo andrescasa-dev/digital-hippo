@@ -88,7 +88,7 @@ export default function ImageSlider({urls}:ImageSliderProps) {
           className="h-64 w-64 relative"
         >
           <Image
-            className='h-full w-full object-cover object-center -z-10'
+            className='h-full w-full object-cover object-center -z-10 bg-gray-100'
             fill
             sizes="100vw, (min-width: 340px) 50vw, (min-width: 768px) 25vw"
             src={url} 

@@ -1,10 +1,15 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { getServerSideUser } from "@/lib/payload-utils";
+import { cn } from "@/lib/utils";
 import { ArrowDownToLine, ArrowRight, CheckCircle, Leaf } from 'lucide-react';
+import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const nextCookies = cookies()
+  const {user} = await getServerSideUser(nextCookies)
   const perks = [
     {
       title: 'Instant Delivery',
@@ -39,10 +44,33 @@ export default function Home() {
               highest quality standards.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href={'/products'} className={buttonVariants()}> browse trending</Link>
-            <Button variant={'ghost'} className="flex  items-center">
-              Our quality promise <ArrowRight aria-hidden={true} className="w-4 h-3"/>
-            </Button>
+            <Link 
+              href={'/products'} 
+              className={buttonVariants({variant: `${user ? 'secondary': 'default'}`})}
+              > 
+                Browse and buy
+            </Link>
+            {user
+              ? (
+                <Link 
+                   href={'/sell'} 
+                  className={cn(buttonVariants({variant: 'default'}), "flex items-center")}
+                  >
+                  Seller dashboard 
+                <ArrowRight aria-hidden={true} className="w-4 h-3"/>
+            </Link>
+              )
+              : (
+                <Link 
+              href={'/sign-in'} 
+              className={cn(buttonVariants({variant: 'secondary'}), "flex items-center")}
+              >
+                Become a seller 
+                <ArrowRight aria-hidden={true} className="w-4 h-3"/>
+            </Link>
+              )
+            }
+            
           </div>
         </section>
         <ProductReel 

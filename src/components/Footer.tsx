@@ -6,6 +6,7 @@ import MaxWidthWrapper from "./MaxWidthWrapper"
 import { buttonVariants } from "./ui/button"
 import { usePathname } from "next/navigation"
 import { ArrowRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 function Footer() {
   const pathName = usePathname()
@@ -13,8 +14,10 @@ function Footer() {
   return (
     <footer className="flex flex-col gap-10 pt-16 pb-10 border-t ">
       {!toMinimize.includes(pathName) && <LogoAndCTA />}
-      <MaxWidthWrapper className="flex flex-wrap gap-4 justify-center items-center sm:justify-between text-sm text-muted-foreground">
-        <p className="">	&#169; 2024 All Rights Reserved</p>
+      <MaxWidthWrapper className="flex flex-wrap gap-4 justify-center items-center lg:justify-between text-sm text-muted-foreground">
+      <p>	Made By Andr&eacute;s Castellanos With Passion &#9829;</p>
+      <p>	&#169; 2024 All Rights Reserved</p>
+        
         <div className="flex flex-wrap justify-center">
           <Link href={'#'} className={buttonVariants({variant: "link"})}> Terms</Link>
           <Link href={'#'} className={buttonVariants({variant: "link"})}> Privacy Policy</Link>
@@ -32,13 +35,13 @@ const LogoAndCTA = () => {
         <Icons.logo className="h-12 w-auto" /> 
       </div>
       <div className="py-8 flex flex-col items-center bg-zinc-50 ">
-        <h3 className='font-semibold text-gray-900'>
+        <h2 className='text-2xl font-semibold text-gray-900'>
           Become a seller
-        </h3>
+        </h2>
         <p className='mt-2 text-sm text-muted-foreground max-w-sm text-center'>
           If you&apos;d like to sell high-quality digital products, you can do so in minutes.{' '}
           <Link 
-            className='whitespace-nowrap font-medium text-black hover:text-zinc-900 inline-flex gap-0 items-center'
+            className={cn(buttonVariants({variant: 'link'}),'whitespace-nowrap font-medium inline-flex gap-0 py-0 p-1 items-center')}
             href={'/sign-up?as=seller'}
           > 
             Get started <ArrowRight aria-hidden={true} className="w-4 h-3"/> 

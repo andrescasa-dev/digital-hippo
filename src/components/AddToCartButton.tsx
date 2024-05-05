@@ -27,7 +27,7 @@ export default function AddToCartButton( {product}: addToCartButtonProps) {
   useEffect(()=>{
     const timerId = additionStatus !== "waiting" && setTimeout(()=>{
       setAdditionStatus('waiting')
-    }, 2000)
+    }, 500)
     return () => {
       timerId && clearTimeout(timerId)
     }
@@ -36,7 +36,7 @@ export default function AddToCartButton( {product}: addToCartButtonProps) {
   return (
     <Button 
       className={cn(
-        "w-full mb-6 capitalize",
+        "w-full mb-6 capitalize transition-none",
         {"bg-red-800": additionStatus === 'conflict'}
       )}
       size={'lg'}

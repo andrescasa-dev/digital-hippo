@@ -28,7 +28,7 @@ function PaymentStatus({email,_isPayed, orderId}: {email: string,_isPayed: boole
           <h4 className="font-medium text-gray-900">
             Order Status
           </h4>
-          <p>{_isPayed ? "idk" : "Pending payment"}</p>
+          <p>{_isPayed ? "paid" : "Pending payment"}</p>
         </div>
     </section>
   )
