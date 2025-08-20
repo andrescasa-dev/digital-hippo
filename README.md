@@ -132,6 +132,6 @@ A complete **digital marketplace** built with **Next.js 14**, featuring secure a
 
 This project is available under the MIT License.
 
----
+<br />
 
 **Built with ❤️ using Next.js 14, PayloadCMS, and modern web development best practices.**
